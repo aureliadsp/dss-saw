@@ -12,11 +12,18 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/mainjquery.css">
+  <link rel="stylesheet" href="css/jquery.steps.css">
+  <script src="lib/modernizr-2.6.2.min.js"></script>
+  <script src="lib/jquery-1.9.1.min.js"></script>
+  <script src="lib/jquery.cookie-1.3.1.js"></script>
+  <script src="lib/jquery.steps.js"></script>
 </head>
 
       <?php
@@ -70,8 +77,8 @@
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Home</span></a></li>
-        <li><a href="startDSS.php"><i class="fa fa-link"></i> <span>DSS - SAW</span></a></li>
+        <li><a href="home.php"><i class="fa fa-link"></i> <span>Home</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>DSS - SAW</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Data</span>
@@ -109,80 +116,44 @@
     <section class="content container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <div class="box box-primary">
-            <form id="input-data-form" action="#">
-              <h3>Account</h3>
-              <fieldset>
-                  <legend>Silahkan pilih hewan ternak :</legend>
-           
-                  <label for="userName-2">User name *</label>
-                  <input id="userName-2" name="userName" type="text" class="required">
-                  <label for="password-2">Password *</label>
-                  <input id="password-2" name="password" type="text" class="required">
-                  <label for="confirm-2">Confirm Password *</label>
-                  <input id="confirm-2" name="confirm" type="text" class="required">
-                  <p>(*) Mandatory</p>
-              </fieldset>
-           
-              <h3>Profile</h3>
-              <fieldset>
-                  <legend>Profile Information</legend>
-           
-                  <label for="name-2">First name *</label>
-                  <input id="name-2" name="name" type="text" class="required">
-                  <label for="surname-2">Last name *</label>
-                  <input id="surname-2" name="surname" type="text" class="required">
-                  <label for="email-2">Email *</label>
-                  <input id="email-2" name="email" type="text" class="required email">
-                  <label for="address-2">Address</label>
-                  <input id="address-2" name="address" type="text">
-                  <label for="age-2">Age (The warning step will show up if age is less than 18) *</label>
-                  <input id="age-2" name="age" type="text" class="required number">
-                  <p>(*) Mandatory</p>
-              </fieldset>
-           
-              <h3>Warning</h3>
-              <fieldset>
-                  <legend>You are to young</legend>
-           
-                  <p>Please go away ;-)</p>
-              </fieldset>
-           
-              <h3>Finish</h3>
-              <fieldset>
-                  <legend>Terms and Conditions</legend>
-           
-                  <input id="acceptTerms-2" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms-2">I agree with the Terms and Conditions.</label>
-              </fieldset>
-          </form>
-        <!-- 
-            <form action="selectlocation.php" method="GET">
-              1. Select animal : 
-              <select name="animalsel">
-                <?php
+          <!-- Custom Tabs -->
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <br>
+              <li class="active"><h4><a href="#tab_1" data-toggle="tab">  Pilih hewan untuk di uji  </a></h4></li>
+              <li><h4><a href="#tab_2" data-toggle="tab">  Pilih LokaAAAAAAAAAAAA</a></h4></li>
+              <li><h4><a href="#tab_3" data-toggle="tab">  Edit Lokasi  </a></h4></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_1">
 
-                  //$getanimal = mysqli_query($connect_db, "SELECT animal_id, animal_name FROM tb_animal");
-                  //while ( $row = mysqli_fetch_array($connect_db, $getanimal) )
-                  {
-                    //echo "<option value=" . $row['animal_id'] . ">" . $row['animal_name'] . "</option>";
-                  }
 
-                  //$sql13 = mysql_query("SELECT loc_id FROM tempresult");
-                  //while ($row13 = mysql_fetch_array($sql13))
-                  {
-                    //$checktemp = $row13['loc_id'];
-                  }
-
-                  //if ($checktemp != null) 
-                  {
-                    //echo "You still got result of previous ";
-                  }
-                ?>
-              </select>
-              <br><br><br><br>
-              <Input type="Submit" value=" Start " name="submit_animal">
-          </form>
-        -->
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_2">
+                The European languages are members of the same family. Their separate existence is a myth.
+                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                new common language would be desirable: one could refuse to pay expensive translators. To
+                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                words. If several languages coalesce, the grammar of the resulting language is more simple
+                and regular than that of the individual languages.
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_3">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- nav-tabs-custom -->
           </div>
         </div>
       </div>
@@ -283,71 +254,11 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
+
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-
-<script>
-          var form = $("#input-data-form").show();
-       
-          form.steps({
-              headerTag: "h3",
-              bodyTag: "fieldset",
-              transitionEffect: "slideLeft",
-              onStepChanging: function (event, currentIndex, newIndex)
-              {
-                  // Allways allow previous action even if the current form is not valid!
-                  if (currentIndex > newIndex)
-                  {
-                      return true;
-                  }
-                  // Forbid next action on "Warning" step if the user is to young
-                  if (newIndex === 3 && Number($("#age-2").val()) < 18)
-                  {
-                      return false;
-                  }
-                  // Needed in some cases if the user went back (clean up)
-                  if (currentIndex < newIndex)
-                  {
-                      // To remove error styles
-                      form.find(".body:eq(" + newIndex + ") label.error").remove();
-                      form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
-                  }
-                  form.validate().settings.ignore = ":disabled,:hidden";
-                  return form.valid();
-              },
-              onStepChanged: function (event, currentIndex, priorIndex)
-              {
-                  // Used to skip the "Warning" step if the user is old enough.
-                  if (currentIndex === 2 && Number($("#age-2").val()) >= 18)
-                  {
-                      form.steps("next");
-                  }
-                  // Used to skip the "Warning" step if the user is old enough and wants to the previous step.
-                  if (currentIndex === 2 && priorIndex === 3)
-                  {
-                      form.steps("previous");
-                  }
-              },
-              onFinishing: function (event, currentIndex)
-              {
-                  form.validate().settings.ignore = ":disabled";
-                  return form.valid();
-              },
-              onFinished: function (event, currentIndex)
-              {
-                  alert("Submitted!");
-              }
-          }).validate({
-              errorPlacement: function errorPlacement(error, element) { element.before(error); },
-              rules: {
-                  confirm: {
-                      equalTo: "#password-2"
-                  }
-              }
-          });
-      </script>
 </body>
 </html>

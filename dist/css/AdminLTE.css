@@ -2462,12 +2462,15 @@ a:focus {
   border-top-left-radius: 3px;
 }
 .nav-tabs-custom > .nav-tabs > li {
+  border-radius: 5px;
   border-top: 3px solid transparent;
+  background: #00c0ef;
   margin-bottom: -2px;
   margin-right: 5px;
 }
 .nav-tabs-custom > .nav-tabs > li.disabled > a {
   color: #777;
+  background: #d2d6de;
 }
 .nav-tabs-custom > .nav-tabs > li > a {
   color: #444;

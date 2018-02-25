@@ -14,22 +14,19 @@
   <!-- Theme -->
   <link rel="stylesheet" href="dist/css/AdminLTE.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+    <!-- DataTables -->
+  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/mainjquery.css">
-  <link rel="stylesheet" href="css/jquery.steps.css">
-  <script src="lib/modernizr-2.6.2.min.js"></script>
-  <script src="lib/jquery-1.9.1.min.js"></script>
-  <script src="lib/jquery.cookie-1.3.1.js"></script>
-  <script src="lib/jquery.steps.js"></script>
 </head>
 
-      <?php
-          $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-          mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
-      ?>
+  <?php
+    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
+    $sqlanimal = mysqli_query($connect_db, "SELECT animal_id, animal_name FROM tb_animaldata");
+  ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -115,61 +112,137 @@
     <!-- Main content -->
     <section class="content container-fluid">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="box box-solid">
             <div class="box-header with-border">
-              <h4><b><i class="fa  fa-circle-o-notch"></i> Pilih hewan dan lokasi</b></h4>
+              <h4><b><i class="fa fa-circle-o-notch"></i> Pilih hewan dan lokasi</b></h4>
             </div>
-            <br>
-            Silahkan pilih hewan dan lokasi yang akan di uji :
-            <br>
           <!-- Custom Tabs -->
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <br>
-              <li class="active"><h4><a href="#tab_1" data-toggle="tab">  Pilih hewan untuk di uji  </a></h4></li>
-              <li><h4><a href="#tab_2" data-toggle="tab">  Pilih LokaAAAAAAAAAAAA</a></h4></li>
-              <li><h4><a href="#tab_3" data-toggle="tab">  Edit Lokasi  </a></h4></li>
+              <li class="active"><a href="#tab_1" data-toggle="tab"> <i class="fa fa-paw"></i> Pilih hewan </a></li>
+              <li><a href="#tab_2" data-toggle="tab"> <i class="fa fa-location-arrow"></i> Pilih lokasi </a></li>
+              <li><a href="#tab_3" data-toggle="tab"> <i class="fa fa-edit Edit Lokasi"></i> Edit data lokasi  </a></li>
             </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab_1">
+            <form method="get">
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                  <center>
+                    <br>
+                    <b>1. Silahkan pilih hewan yang akan di uji :</b>
+                    <br><br>
+                    <div class="form-group">
+                    <select name="selectanimal">
+                      <?php
+                        while ($row = mysqli_fetch_array($sqlanimal))
+                        {
+                          echo "<option value=" . $row['animal_id'] . ">" . $row['animal_name'] . "</option>";
+                        }
+                      ?>
+                    </select>
+                    <br><br>
 
+                    <a class="btn btn-primary btnNext" >Next</a>
+                    <br><br>
+                    </div>
+                  </center>
+                </div>
 
+                <div class="tab-pane" id="tab_2">
+                  <div class="form-group">
+                  <center>
+                    <br><b>2. Silahkan pilih lokasi yang akan di uji dari tabel berikut :</b><br>
+                    <h6>(*lokasi yang di pilih minimal 5.)</h6>
+                    <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Rendering engine</th>
+                  <th>Browser</th>
+                  <th>Platform(s)</th>
+                  <th>Engine version</th>
+                  <th>CSS grade</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td> 4</td>
+                  <td>X</td>
+                </tr>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 5.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>5</td>
+                  <td>C</td>
+                </tr>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 5.5
+                  </td>
+                  <td>Win 95+</td>
+                  <td>5.5</td>
+                  <td>A</td>
+                </tr>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 6
+                  </td>
+                  <td>Win 98+</td>
+                  <td>6</td>
+                  <td>A</td>
+                </tr>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet Explorer 7</td>
+                  <td>Win XP SP2+</td>
+                  <td>7</td>
+                  <td>A</td>
+                </tr>
+                <tr>
+                  <td>Trident</td>
+                  <td>AOL browser (AOL desktop)</td>
+                  <td>Win XP</td>
+                  <td>6</td>
+                  <td>A</td>
+                </tr>
+
+                </tbody>
+                </table>
+                    <a class="btn btn-primary btnPrevious" >Previous</a>
+                    <a class="btn btn-primary btnNext" >Next</a>
+                  </center>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_3">
+                  <div class="form-group">
+                  hai
+                  <a class="btn btn-primary btnPrevious" >Previous</a>
+                  <a class="btn btn-primary btnNext" >Next</a>
+                  </div>
+                </div>
               </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_2">
-                The European languages are members of the same family. Their separate existence is a myth.
-                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                new common language would be desirable: one could refuse to pay expensive translators. To
-                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                words. If several languages coalesce, the grammar of the resulting language is more simple
-                and regular than that of the individual languages.
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
-              </div>
-              <!-- /.tab-pane -->
-            </div>
+            </form>
           </div>
-        </div>
-            <!-- /.tab-content -->
-          </div>
-          <!-- nav-tabs-custom -->
-          </div>
+          <div class="box-footer">
         </div>
         </div>
       </div>
-    </section>
-    <!-- /.content -->
+    </div>
   </div>
+</section>
+</div>
   <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
@@ -270,5 +343,35 @@
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+<!-- DataTables -->
+<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../../bower_components/fastclick/lib/fastclick.js"></script>
+
+<script type="text/javascript">
+  $('.btnNext').click(function()
+  {
+    $('.nav-tabs > .active').next('li').find('a').trigger('click');
+  });
+
+  $('.btnPrevious').click(function()
+  {
+    $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+  });
+
+  $(function () {
+    $('#example1').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
 </body>
 </html>

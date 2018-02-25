@@ -116,6 +116,13 @@
     <section class="content container-fluid">
       <div class="row">
         <div class="col-md-12">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h4><b><i class="fa  fa-circle-o-notch"></i> Pilih hewan dan lokasi</b></h4>
+            </div>
+            <br>
+            Silahkan pilih hewan dan lokasi yang akan di uji :
+            <br>
           <!-- Custom Tabs -->
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
@@ -151,10 +158,13 @@
               </div>
               <!-- /.tab-pane -->
             </div>
+          </div>
+        </div>
             <!-- /.tab-content -->
           </div>
           <!-- nav-tabs-custom -->
           </div>
+        </div>
         </div>
       </div>
     </section>

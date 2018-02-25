@@ -18,6 +18,12 @@
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+
+      <?php
+          $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+          mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+      ?>
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -90,7 +96,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
+        Start SAW
         <small>Optional description</small>
       </h1>
       <ol class="breadcrumb">
@@ -104,19 +110,79 @@
       <div class="row">
         <div class="col-md-12">
           <div class="box box-primary">
-            <div class="box-header">
-              <i class="fa fa-edit"></i> <h3 class="box-title"> Welcome to Mapping Livestock with DSS - SAW.</h3>
-            </div>
-            <center>
+            <form id="input-data-form" action="#">
+              <h3>Account</h3>
+              <fieldset>
+                  <legend>Silahkan pilih hewan ternak :</legend>
+           
+                  <label for="userName-2">User name *</label>
+                  <input id="userName-2" name="userName" type="text" class="required">
+                  <label for="password-2">Password *</label>
+                  <input id="password-2" name="password" type="text" class="required">
+                  <label for="confirm-2">Confirm Password *</label>
+                  <input id="confirm-2" name="confirm" type="text" class="required">
+                  <p>(*) Mandatory</p>
+              </fieldset>
+           
+              <h3>Profile</h3>
+              <fieldset>
+                  <legend>Profile Information</legend>
+           
+                  <label for="name-2">First name *</label>
+                  <input id="name-2" name="name" type="text" class="required">
+                  <label for="surname-2">Last name *</label>
+                  <input id="surname-2" name="surname" type="text" class="required">
+                  <label for="email-2">Email *</label>
+                  <input id="email-2" name="email" type="text" class="required email">
+                  <label for="address-2">Address</label>
+                  <input id="address-2" name="address" type="text">
+                  <label for="age-2">Age (The warning step will show up if age is less than 18) *</label>
+                  <input id="age-2" name="age" type="text" class="required number">
+                  <p>(*) Mandatory</p>
+              </fieldset>
+           
+              <h3>Warning</h3>
+              <fieldset>
+                  <legend>You are to young</legend>
+           
+                  <p>Please go away ;-)</p>
+              </fieldset>
+           
+              <h3>Finish</h3>
+              <fieldset>
+                  <legend>Terms and Conditions</legend>
+           
+                  <input id="acceptTerms-2" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms-2">I agree with the Terms and Conditions.</label>
+              </fieldset>
+          </form>
+        <!-- 
+            <form action="selectlocation.php" method="GET">
+              1. Select animal : 
+              <select name="animalsel">
+                <?php
+
+                  //$getanimal = mysqli_query($connect_db, "SELECT animal_id, animal_name FROM tb_animal");
+                  //while ( $row = mysqli_fetch_array($connect_db, $getanimal) )
+                  {
+                    //echo "<option value=" . $row['animal_id'] . ">" . $row['animal_name'] . "</option>";
+                  }
+
+                  //$sql13 = mysql_query("SELECT loc_id FROM tempresult");
+                  //while ($row13 = mysql_fetch_array($sql13))
+                  {
+                    //$checktemp = $row13['loc_id'];
+                  }
+
+                  //if ($checktemp != null) 
+                  {
+                    //echo "You still got result of previous ";
+                  }
+                ?>
+              </select>
               <br><br><br><br>
-              <b> Website ini merupakan salah satu part untuk pembelajaran </b>
-              <br><br>
-              Tujuan dari website ini adalah untuk mempermudah dalam penentuan lokasi apa yang cocok dengan hewan yang akan kita test.
-              <form action="sawstart.php" method="post">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Start SAW</button>
-              </form>
-              <br><br><br><br>
-            </center>
+              <Input type="Submit" value=" Start " name="submit_animal">
+          </form>
+        -->
           </div>
         </div>
       </div>
@@ -223,8 +289,65 @@
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
+<script>
+          var form = $("#input-data-form").show();
+       
+          form.steps({
+              headerTag: "h3",
+              bodyTag: "fieldset",
+              transitionEffect: "slideLeft",
+              onStepChanging: function (event, currentIndex, newIndex)
+              {
+                  // Allways allow previous action even if the current form is not valid!
+                  if (currentIndex > newIndex)
+                  {
+                      return true;
+                  }
+                  // Forbid next action on "Warning" step if the user is to young
+                  if (newIndex === 3 && Number($("#age-2").val()) < 18)
+                  {
+                      return false;
+                  }
+                  // Needed in some cases if the user went back (clean up)
+                  if (currentIndex < newIndex)
+                  {
+                      // To remove error styles
+                      form.find(".body:eq(" + newIndex + ") label.error").remove();
+                      form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
+                  }
+                  form.validate().settings.ignore = ":disabled,:hidden";
+                  return form.valid();
+              },
+              onStepChanged: function (event, currentIndex, priorIndex)
+              {
+                  // Used to skip the "Warning" step if the user is old enough.
+                  if (currentIndex === 2 && Number($("#age-2").val()) >= 18)
+                  {
+                      form.steps("next");
+                  }
+                  // Used to skip the "Warning" step if the user is old enough and wants to the previous step.
+                  if (currentIndex === 2 && priorIndex === 3)
+                  {
+                      form.steps("previous");
+                  }
+              },
+              onFinishing: function (event, currentIndex)
+              {
+                  form.validate().settings.ignore = ":disabled";
+                  return form.valid();
+              },
+              onFinished: function (event, currentIndex)
+              {
+                  alert("Submitted!");
+              }
+          }).validate({
+              errorPlacement: function errorPlacement(error, element) { element.before(error); },
+              rules: {
+                  confirm: {
+                      equalTo: "#password-2"
+                  }
+              }
+          });
+      </script>
 </body>
 </html>

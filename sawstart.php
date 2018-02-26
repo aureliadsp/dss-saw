@@ -26,6 +26,8 @@
     mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
     $sqlanimal = mysqli_query($connect_db, "SELECT animal_id, animal_name FROM tb_animaldata");
+    $sqlcriteria = mysqli_query($connect_db, "SELECT cri_id, cri_name, type FROM tb_criteria");
+    $sqllocation = mysqli_query($connect_db,"SELECT loc_id, loc_name, loc_district FROM tb_locationdata");
   ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -122,10 +124,10 @@
             <ul class="nav nav-tabs">
               <br>
               <li class="active"><a href="#tab_1" data-toggle="tab"> <i class="fa fa-paw"></i> Pilih hewan </a></li>
-              <li><a href="#tab_2" data-toggle="tab"> <i class="fa fa-location-arrow"></i> Pilih lokasi </a></li>
-              <li><a href="#tab_3" data-toggle="tab"> <i class="fa fa-edit Edit Lokasi"></i> Edit data lokasi  </a></li>
+              <li><a href="#tab_2" data-toggle="tab"> <i class="fa fa-balance-scale"></i> Edit bobot kriteria </a></li>
+              <li><a href="#tab_3" data-toggle="tab"> <i class="fa fa-location-arrow"></i> Pilih lokasi </a></li>
             </ul>
-            <form method="get">
+            <form action="editlocation.php" method="get">
               <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                   <center>
@@ -135,14 +137,14 @@
                     <div class="form-group">
                     <select name="selectanimal">
                       <?php
-                        while ($row = mysqli_fetch_array($sqlanimal))
+                        while ($rowanimal = mysqli_fetch_array($sqlanimal))
                         {
-                          echo "<option value=" . $row['animal_id'] . ">" . $row['animal_name'] . "</option>";
+                          echo "<option value=" . $rowanimal['animal_id'] . ">" . $rowanimal['animal_name'] . "</option>";
                         }
                       ?>
                     </select>
                     <br><br>
-
+                    
                     <a class="btn btn-primary btnNext" >Next</a>
                     <br><br>
                     </div>
@@ -152,84 +154,124 @@
                 <div class="tab-pane" id="tab_2">
                   <div class="form-group">
                   <center>
-                    <br><b>2. Silahkan pilih lokasi yang akan di uji dari tabel berikut :</b><br>
-                    <h6>(*lokasi yang di pilih minimal 5.)</h6>
-                    <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 4.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.5
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5.5</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 6
-                  </td>
-                  <td>Win 98+</td>
-                  <td>6</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 7</td>
-                  <td>Win XP SP2+</td>
-                  <td>7</td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>AOL browser (AOL desktop)</td>
-                  <td>Win XP</td>
-                  <td>6</td>
-                  <td>A</td>
-                </tr>
-
-                </tbody>
-                </table>
-                    <a class="btn btn-primary btnPrevious" >Previous</a>
-                    <a class="btn btn-primary btnNext" >Next</a>
-                  </center>
+                  <br><b>2. Silahkan masukan bobot dari masing - masing kriteria :</b><br>
+                  <h6>(*mohon masukkan bobot masing-masing kriteria dengan nilai antara 1 - 10 agar mempermudah proses perhitungan.)</h6>
+                  <br>
+                  <table id="choosecrit" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th>ID Kriteria</th>
+                        <th>Nama Kriteria</th>
+                        <th>Tipe Kriteria</th>
+                        <th>Bobot Kriteria</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <?php
+                        while($rowcrit = mysqli_fetch_row($sqlcriteria))
+                        {
+                          for ($a = 0; $a < 1 ; $a++) 
+                          { 
+                            echo"<tr>";
+                            for ($b = 0; $b < 3 ; $b++) 
+                            { 
+                              echo "<td>" . $rowcrit[$b] . "</td>";
+                            }
+                            for($c = 0; $c < 1 ; $c++) 
+                            {
+                              ?>
+                              <script type="text/javascript">
+                                function checkForm(form)
+                                {
+                                  if(form.<?php print_r($rowcrit[$c]) ?>.value < 1) 
+                                  {
+                                    alert("Error: Enter weight between 1 - 10!");
+                                    form.<?php print_r($rowcrit[$c]) ?>.focus();
+                                    return false;
+                                  }
+                                  if(form.<?php print_r($rowcrit[$c]) ?>.value > 10) 
+                                  {
+                                    alert("Error: Enter weight between 1 - 10!");
+                                    form.<?php print_r($rowcrit[$c]) ?>.focus();
+                                    return false;
+                                  }
+                                  return true;
+                                }
+                              </script> 
+                          <?php
+                              echo "<td><input type=\"text\" name=\"weight[]\" id=\"" . $rowcrit[$c] ."\"></td></tr>";
+                            }
+                          }
+                        }                 
+                      ?>
+                      </tbody>
+                    </table>
+                  <a class="btn btn-primary btnPrevious" >Previous</a>
+                  <a class="btn btn-primary btnNext" >Next</a>
                   </div>
                 </div>
 
                 <div class="tab-pane" id="tab_3">
                   <div class="form-group">
-                  hai
-                  <a class="btn btn-primary btnPrevious" >Previous</a>
-                  <a class="btn btn-primary btnNext" >Next</a>
+                    <script type="text/javascript">
+                      function checkArray(form, arrayName)
+                      {
+                        var retval = new Array();
+                        for(var i=0; i < form.elements.length; i++) {
+                          var el = form.elements[i];
+                          if(el.type == "checkbox" && el.name == arrayName && el.checked) {
+                              retval.push(el.value);
+                          }
+                        }
+                          return retval;
+                      }
+                      function checkForm(form)
+                      {
+                        var itemsChecked = checkArray(form, "chk_loc[]");
+                        if(itemsChecked.length < 5) {
+                          alert("Please choose at least 5 location!");
+                          return false;
+                        }
+                        return true;
+                      }
+                    </script>
+                    <script type="text/javascript">
+                      $("#select_all").change(function () 
+                      {
+                          $("input:checkbox").prop('checked', $(this).prop("checked"));
+                      });
+                    </script>
+                  <center>
+                  <br><b>3. Silahkan pilih lokasi yang akan di uji dari tabel berikut :</b><br>
+                  <h6>(*lokasi yang di pilih minimal 5.)</h6>
+                  <div class="box-body">
+                  <table id="chooseloc" class="table table-bordered table-striped">
+                    <thead>
+                    <?php
+                      echo "<tr>
+                        <th width=\"70\"><label><input type=\"checkbox\" id=\"select_all\" /> ALL </label>  </th>
+                        <th>ID Lokasi</th>
+                        <th>Nama Lokasi</th>
+                        <th>Daerah</th>
+                      </tr>";
+                      ?>
+                      </thead>
+                      <tbody>
+                      <?php
+                      while ($rowloc = mysqli_fetch_array($sqllocation))
+                      {
+                        echo "<tr><td>
+                            <label><input type=\"checkbox\" class= \"checkbox\" name=\"chk_loc[]\" value=". $rowloc['loc_id'] ." />
+                            </td><td>" . $rowloc['loc_id'] . "</td><td>" . $rowloc['loc_name'] . "</td><td>
+                            " . $rowloc['loc_district'] . "</td></tr></label>";
+                      }
+                      ?>
+                    </tbody>
+                    </table>
+                    <a class="btn btn-primary btnPrevious" >Previous</a>
+                    <button type="submit" class="btn btn-primary"> Start </button>
+
+                  </center>
                   </div>
                 </div>
               </div>

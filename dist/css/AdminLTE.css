@@ -2643,6 +2643,13 @@ a:focus {
 .table tr td .progress {
   margin-top: 5px;
 }
+
+@media (min-width: 768px) {
+  .table{
+    width: 500;
+  }
+}
+
 .table-bordered {
   border: 1px solid #f4f4f4;
 }

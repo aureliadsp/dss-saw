@@ -1772,6 +1772,7 @@ a:focus {
   border-top-left-radius: 3px;
 }
 .box-body > .table {
+  table-layout: fixed;
   margin-bottom: 0;
 }
 .box-body .fc {
@@ -2636,6 +2637,7 @@ a:focus {
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
   border-top: 1px solid #f4f4f4;
+
 }
 .table > thead > tr > th {
   border-bottom: 2px solid #f4f4f4;

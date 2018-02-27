@@ -245,14 +245,18 @@
                   <br><b>3. Silahkan pilih lokasi yang akan di uji dari tabel berikut :</b><br>
                   <h6>(*lokasi yang di pilih minimal 5.)</h6>
                   <div class="box-body">
+                  <style>
+                    table { table-layout: fixed; }
+                    table th, table td { overflow: hidden; }
+                  </style>
                   <table id="chooseloc" class="table table-bordered table-striped">
                     <thead>
                     <?php
                       echo "<tr>
-                        <th class=\"\"><label><input type=\"checkbox\" id=\"select_all\" /> ALL </label>  </th>
-                        <th>ID Lokasi</th>
-                        <th>Nama Lokasi</th>
-                        <th>Daerah</th>
+                        <th class=\"col-sm-1\"><label><input type=\"checkbox\" id=\"select_all\" /> ALL </label>  </th>
+                        <th class=\"col-sm-2\">ID Lokasi</th>
+                        <th class=\"col-sm-1\">Nama Lokasi</th>
+                        <th class=\"col-sm-1\">Daerah</th>
                       </tr>";
                       ?>
                       </thead>
@@ -269,7 +273,7 @@
                     </tbody>
                     </table>
                     <a class="btn btn-primary btnPrevious" >Previous</a>
-                    <button type="submit" class="btn btn-primary"> Start </button>
+                    <button type="Submit" name="input_data" class="btn btn-primary"> Start </button>
 
                   </center>
                   </div>

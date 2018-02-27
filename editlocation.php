@@ -41,7 +41,7 @@
       $_SESSION['m_locationsess'] = $m_location; // save location to session
       $m_locselected = implode("','", $m_location);
 
-      $querylocedit = mysqli_query($connect_db, "SELECT DISTINCT w.water_id, f.fodder_id, m.mobility_id, l.* 
+      $querylocedit = mysqli_query($connect_db, "SELECT DISTINCT w.value_total, f.value_total, m.value_total, l.* 
                 FROM `tb_locationdata` l
                 LEFT OUTER JOIN `tb_waterdata` w
                   ON l.loc_id = w.water_id

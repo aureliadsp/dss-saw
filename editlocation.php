@@ -25,7 +25,7 @@
     $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
     mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
-    if( isset( $_GET['selectanimal'] ) )
+    if( isset( $_GET['selectanimal'] ) AND isset( $_GET['weight']) AND isset( $_GET['chk_loc']) )
     {
       $_SESSION['m_animalIDsess'] = $_GET['selectanimal']; // Get animal
       $m_criteriaweight = $_GET['weight']; // Get weight
@@ -39,17 +39,13 @@
 
       $_SESSION['m_weightsess'] = $m_weightfinal; // save to session
       $_SESSION['m_locationsess'] = $m_location; // save location to session
-      $m_locselected = implode("','", $m_location);
 
-      $querylocedit = mysqli_query($connect_db, "SELECT DISTINCT w.value_total, f.value_total, m.value_total, l.* 
-                FROM `tb_locationdata` l
-                LEFT OUTER JOIN `tb_waterdata` w
-                  ON l.loc_id = w.water_id
-                LEFT OUTER JOIN `tb_fodderdata` f
-                  ON w.water_id = f.fodder_id
-                LEFT OUTER JOIN `tb_mobilitydata` m
-                  ON f.fodder_id = m.mobility_id
-                WHERE l.loc_id IN ('".$m_locselected."'')" );
+      $querylocedit = mysqli_query($connect_db, "SELECT w.value_total, f.value_total, m.value_total, l.* 
+                      FROM tb_locationdata l 
+                      JOIN tb_waterdata w ON l.loc_id = w.water_id 
+                      JOIN tb_fodderdata f ON l.loc_id = f.fodder_id 
+                      JOIN tb_mobilitydata m ON l.loc_id = m.mobility_id 
+                      WHERE l.loc_id IN ('" . implode("','",$m_location) . "')" );
 
       $finalcb = array();
       $m_locnewID = array();
@@ -59,6 +55,7 @@
         $m_locnewID[] = $rowloc['3'];
         $_SESSION['m_locnewID'] = $m_locnewID;
       }
+
       if(is_array($m_locnewID))
       {
         foreach ($m_locnewID as $id) 
@@ -173,16 +170,13 @@
                     <br><br>
                     <div class="form-group">
                       <?php
-
-                        echo '<pre>'; print_r($m_weightfinal); echo '</pre>';
-                        echo '<pre>'; print_r($m_locselected); echo '</pre>';
+                        echo '<pre>'; print_r($finalcb); echo '</pre>';
+                        echo '<pre>'; print_r($m_locnewID); echo '</pre>';
                         echo '<pre>'; print_r($_SESSION['m_animalIDsess']); echo '</pre>';
                         echo '<pre>'; print_r($_SESSION['m_locationsess']); echo '</pre>';
+                        echo $sqlid;
 
-                        if( isset( $_GET['selectanimal'] ) )
-                        {
-                          echo 'hello';
-                        }
+
                       ?>
                     <br><br>
                     

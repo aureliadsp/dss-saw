@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2018 at 04:58 PM
+-- Generation Time: Feb 28, 2018 at 05:57 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -32,6 +32,16 @@ CREATE TABLE `tb_animaldata` (
   `lower_temp` decimal(5,2) DEFAULT NULL,
   `upper_temp` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_animaldata`
+--
+
+INSERT INTO `tb_animaldata` (`animal_id`, `animal_name`, `lower_temp`, `upper_temp`) VALUES
+('AN001', 'Beef catle', '15.00', '32.00'),
+('AN002', 'Dairy cow', '10.00', '25.00'),
+('AN003', 'Sheep', '21.00', '31.00'),
+('AN004', 'Goat', '10.00', '20.00');
 
 -- --------------------------------------------------------
 
@@ -218,6 +228,18 @@ CREATE TABLE `tb_tempselected` (
   `C5` decimal(5,2) DEFAULT NULL,
   `C6` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_tempselected`
+--
+
+INSERT INTO `tb_tempselected` (`loc_id`, `loc_name`, `loc_district`, `loc_longitude`, `loc_latitude`, `C1`, `C2`, `C3`, `C4`, `C5`, `C6`) VALUES
+('LO001', 'Depok', 'Bantul', '110.2965559', '-8.0092722', '2.00', '4.00', '4.00', '28.80', '49.50', '35.60'),
+('LO002', 'Jetis', 'Bantul', '110.3735387', '-7.9021438', '3.00', '4.00', '4.00', '70.10', '33.00', '37.80'),
+('LO003', 'Piyungan', 'Bantul', '110.4818811', '-7.8348856', '3.00', '3.00', '2.00', '120.28', '45.00', '36.50'),
+('LO004', 'Playen', 'Gunung_Kidul', '110.5509500', '-7.9404329', '2.00', '3.00', '2.00', '207.82', '69.00', '28.90'),
+('LO005', 'Pathuk', 'Gunung_Kidul', '110.5362193', '-7.8776562', '3.00', '2.00', '3.00', '185.37', '68.00', '30.00'),
+('LO006', 'Pakem', 'Sleman', '110.4237670', '-7.6229514', '4.00', '4.00', '3.00', '650.75', '69.00', '28.00');
 
 -- --------------------------------------------------------
 

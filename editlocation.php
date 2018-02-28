@@ -63,7 +63,7 @@
       {
         foreach ($m_locnewID as $id) 
         {
-          $sqladdid = mysqli_query($connect_db, "INSERT INTO tb_tempselect SELECT * FROM tb_locationdata WHERE tb_locationdata.loc_id = ('".$id."')");
+          $sqladdid = mysqli_query($connect_db, "INSERT INTO tb_tempselected SELECT * FROM tb_locationdata WHERE tb_locationdata.loc_id = ('".$id."')");
         }
       }
     }
@@ -164,7 +164,7 @@
               <br>
               <li class="active"><a href="#tab_1" data-toggle="tab"> <i class="fa fa-paw"></i> Edit data Lokasi </a></li>
             </ul>
-            <form action="editlocation.php" method="get">
+            <form action="sawprocess.php" method="get">
               <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                   <center>
@@ -174,18 +174,45 @@
                     <div class="form-group">
                       <?php
 
-                        echo '<pre>'; print_r($m_weightfinal); echo '</pre>';
+                        /*echo '<pre>'; print_r($m_weightfinal); echo '</pre>';
                         echo '<pre>'; print_r($m_locselected); echo '</pre>';
                         echo '<pre>'; print_r($_SESSION['m_animalIDsess']); echo '</pre>';
-                        echo '<pre>'; print_r($_SESSION['m_locationsess']); echo '</pre>';
-
-                        if( isset( $_GET['selectanimal'] ) )
-                        {
-                          echo 'hello';
-                        }
+                        echo '<pre>'; print_r($_SESSION['m_locationsess']); echo '</pre>';*/
                       ?>
-                    <br><br>
-                    
+                    <table class="table table-bordered table-stripped">
+                    <thead>
+                    <tr>
+                    <?php
+                      $sqlgetcol = mysqli_query($connect_db,"SHOW COLUMNS FROM tb_tempselected");
+                      while( $row = mysqli_fetch_array($sqlgetcol) )
+                      {
+                        echo "<th>" . $row['Field'] . "</th>";
+                        $field[] = $row['Field'];
+                      }
+                    ?>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    //-------------------------------------------------------SELECT VALUE TO BE EDITED
+                      $sqlgetalltemp = mysqli_query($connect_db, "SELECT * FROM tb_tempselected");
+                      while($row = mysqli_fetch_row($sqlgetalltemp))
+                      {
+                        for ($i = 0; $i < count($sqlgetalltemp) ; $i++) 
+                        { 
+                          echo "<tr>";
+                          for ($j = 0; $j < 5 ; $j++) { 
+                            echo "<td>" . $row[$j] . "</td>";
+                          }
+                          for ($j = 5; $j < count($field) ; $j++) 
+                          { 
+                            echo "<td><input type=\"text\" size=\"4\" name=\"" . $i++ ."[]\" id=\"" .$row[$j] ."\" value=" . $row[$j] . "></td>";
+                          }
+                        }
+                      }
+                    ?>
+                    </tbody>
+                    </table>
                     <a class="btn btn-primary btnNext" >Next</a>
                     <br><br>
                     </div>

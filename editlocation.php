@@ -58,9 +58,9 @@
 
       if(is_array($m_locnewID))
       {
-        foreach ($m_locnewID as $id) 
+        foreach ($m_locnewID as &$id) 
         {
-          $sqladdid = mysqli_query($connect_db, "INSERT INTO tb_tempselect SELECT * FROM tb_locationdata WHERE tb_locationdata.loc_id = ('".$id."')");
+          $sqladdid = mysqli_query($connect_db, "INSERT INTO tb_tempselected SELECT * FROM tb_locationdata WHERE tb_locationdata.loc_id IN ('".$id."')");
         }
       }
     }
@@ -161,23 +161,52 @@
               <br>
               <li class="active"><a href="#tab_1" data-toggle="tab"> <i class="fa fa-paw"></i> Edit data Lokasi </a></li>
             </ul>
-            <form action="editlocation.php" method="get">
+            <form action="processsaw.php" method="get">
               <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                   <center>
                     <br>
-                    <b>1. Silahkan edit data dari lokasi apabila diperlukan :</b>
+                    <b> Silahkan edit data dari lokasi apabila diperlukan :</b>
+                    <br>(*untuk nilai air, makanan, dan mobilitas, mohon hanya memasukan nilai dengan 0 - 4.
                     <br><br>
                     <div class="form-group">
+                    <table id="choosecrit" class="table table-bordered table-striped">
+                      <thead>
                       <?php
-                        echo '<pre>'; print_r($finalcb); echo '</pre>';
+                        $getcolumn = mysqli_query($connect_db,"DESCRIBE tb_tempselected");
+                        while($row = mysqli_fetch_array($getcolumn))
+                        {
+                          echo "<th>" . $row['Field'] . "</th>";
+                          $field[] = $row['Field'];
+                        }
+                      ?>
+                      </thead>
+                      <tbody>
+                      <?php
+
+                        /*echo '<pre>'; print_r($finalcb); echo '</pre>';
                         echo '<pre>'; print_r($m_locnewID); echo '</pre>';
                         echo '<pre>'; print_r($_SESSION['m_animalIDsess']); echo '</pre>';
-                        echo '<pre>'; print_r($_SESSION['m_locationsess']); echo '</pre>';
-                        echo $sqlid;
-
-
+                        echo '<pre>'; print_r($m_locnewID); echo '</pre>';*/
                       ?>
+                      <?php
+                        //-------------------------------------------------------SELECT VALUE TO BE EDITED
+                        $sqlgettemporary = mysqli_query($connect_db, "SELECT * FROM tb_tempselected");
+                        while($row = mysqli_fetch_row($sqlgettemporary))
+                        {
+                          for ($i = 0; $i < count($sqlgettemporary); $i++) { 
+                            echo "<tr>";
+                            for ($j = 0; $j < 5 ; $j++) { 
+                              echo "<td>" . $row[$j] . "</td>";
+                            }
+                            for ($j = 5; $j < count($field) ; $j++) { 
+                              echo "<td><input type=\"text\" size=\"4\" name=\"" . $i++ ."[]\" id=\"" .$row[$j] ."\" value=" . $row[$j] . "></td>";
+                            }
+                          }
+                        }
+                      ?>
+                    </tbody>
+                  </table>
                     <br><br>
                     
                     <a class="btn btn-primary btnNext" >Next</a>

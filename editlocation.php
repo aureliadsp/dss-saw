@@ -49,7 +49,7 @@
                   ON w.water_id = f.fodder_id
                 LEFT OUTER JOIN `tb_mobilitydata` m
                   ON f.fodder_id = m.mobility_id
-                WHERE l.loc_id IN ('".$m_locselected."'')" );
+                WHERE l.loc_id IN ('".$m_locselected."')" );
 
       $finalcb = array();
       $m_locnewID = array();

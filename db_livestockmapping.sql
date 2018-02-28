@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2018 at 01:12 PM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.2
+-- Generation Time: Feb 28, 2018 at 04:58 PM
+-- Server version: 10.1.19-MariaDB
+-- PHP Version: 7.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -35,15 +33,17 @@ CREATE TABLE `tb_animaldata` (
   `upper_temp` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `tb_animaldata`
+-- Table structure for table `tb_category`
 --
 
-INSERT INTO `tb_animaldata` (`animal_id`, `animal_name`, `lower_temp`, `upper_temp`) VALUES
-('AN001', 'Sapi', '15.00', '27.00'),
-('AN002', 'Sapi perah', '5.00', '15.00'),
-('AN003', 'Kambing', '21.00', '31.00'),
-('AN004', 'Domba', '10.00', '20.00');
+CREATE TABLE `tb_category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(25) NOT NULL,
+  `img` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -52,23 +52,23 @@ INSERT INTO `tb_animaldata` (`animal_id`, `animal_name`, `lower_temp`, `upper_te
 --
 
 CREATE TABLE `tb_criteria` (
-  `cri_id` varchar(20) NOT NULL,
-  `cri_name` varchar(20) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `weight` decimal(10,5) NOT NULL
+  `cri_id` varchar(10) NOT NULL,
+  `criteria_name` varchar(20) NOT NULL,
+  `type` int(10) NOT NULL,
+  `type_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_criteria`
 --
 
-INSERT INTO `tb_criteria` (`cri_id`, `cri_name`, `type`, `weight`) VALUES
-('CR001', 'water', 'benefit', '0.08300'),
-('CR002', 'fodder', 'benefit', '0.08300'),
-('CR003', 'mobility', 'benefit', '0.08300'),
-('CR004', 'altitude', 'benefit', '0.25000'),
-('CR005', 'humidity', 'benefit', '0.25000'),
-('CR006', 'temperature', 'cost', '0.25000');
+INSERT INTO `tb_criteria` (`cri_id`, `criteria_name`, `type`, `type_name`) VALUES
+('C1', 'waterid', 1, 'benefit'),
+('C2', 'fodderid', 1, 'benefit'),
+('C3', 'mobid', 1, 'benefit'),
+('C4', 'altitude', 1, 'benefit'),
+('C5', 'humidity', 1, 'benefit'),
+('C6', 'temperature', 2, 'cost');
 
 -- --------------------------------------------------------
 
@@ -77,13 +77,13 @@ INSERT INTO `tb_criteria` (`cri_id`, `cri_name`, `type`, `weight`) VALUES
 --
 
 CREATE TABLE `tb_fodderdata` (
-  `fodder_id` varchar(100) NOT NULL,
-  `value_1` int(5) NOT NULL,
-  `value_2` int(5) NOT NULL,
-  `value_3` int(5) NOT NULL,
-  `value_4` int(5) NOT NULL,
-  `value_total` int(5) NOT NULL,
-  `fodder_value` varchar(100) NOT NULL DEFAULT ''
+  `fodder_id` varchar(20) NOT NULL,
+  `value_1` int(5) DEFAULT NULL,
+  `value_2` int(5) DEFAULT NULL,
+  `value_3` int(5) DEFAULT NULL,
+  `value_4` int(5) DEFAULT NULL,
+  `value_total` int(5) DEFAULT NULL,
+  `fodder_value` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -94,11 +94,15 @@ INSERT INTO `tb_fodderdata` (`fodder_id`, `value_1`, `value_2`, `value_3`, `valu
 ('LO001', 1, 1, 1, 1, 4, 'very good'),
 ('LO002', 1, 1, 1, 1, 4, 'very good'),
 ('LO003', 0, 1, 1, 1, 3, 'good'),
-('LO004', 1, 0, 1, 1, 3, 'good'),
-('LO005', 1, 0, 1, 1, 3, 'good'),
+('LO004', 1, 1, 0, 1, 3, 'good'),
+('LO005', 1, 1, 0, 0, 2, 'average'),
 ('LO006', 1, 1, 1, 1, 4, 'very good'),
-('LO007', 1, 1, 1, 1, 4, 'very good'),
-('LO008', 1, 1, 1, 1, 4, 'very good');
+('LO007', 1, 1, 0, 1, 3, 'good'),
+('LO008', 1, 1, 1, 1, 4, 'very good'),
+('LO009', 1, 1, 1, 0, 3, 'good'),
+('LO010', 1, 0, 1, 0, 2, 'average'),
+('LO011', 0, 1, 1, 1, 3, 'good'),
+('LO012', 1, 1, 1, 0, 3, 'good');
 
 -- --------------------------------------------------------
 
@@ -107,32 +111,36 @@ INSERT INTO `tb_fodderdata` (`fodder_id`, `value_1`, `value_2`, `value_3`, `valu
 --
 
 CREATE TABLE `tb_locationdata` (
-  `loc_id` varchar(100) NOT NULL,
-  `loc_name` varchar(35) NOT NULL,
-  `loc_district` varchar(100) NOT NULL,
-  `water_id` varchar(100) DEFAULT NULL,
-  `fodder_id` varchar(100) DEFAULT NULL,
-  `mobility_id` varchar(100) DEFAULT NULL,
-  `loc_altitude` decimal(5,2) NOT NULL,
-  `loc_humidity` decimal(5,2) NOT NULL,
-  `loc_temp` decimal(5,2) NOT NULL,
-  `loc_latitude` varchar(20) NOT NULL,
-  `loc_longitude` varchar(20) NOT NULL
+  `loc_id` varchar(20) NOT NULL,
+  `loc_name` varchar(35) DEFAULT NULL,
+  `loc_district` varchar(100) DEFAULT NULL,
+  `loc_longitude` text NOT NULL,
+  `loc_latitude` text NOT NULL,
+  `water_id` varchar(20) DEFAULT NULL,
+  `fodder_id` varchar(20) DEFAULT NULL,
+  `mobility_id` varchar(20) DEFAULT NULL,
+  `loc_altitude` decimal(5,2) DEFAULT NULL,
+  `loc_humidity` decimal(5,2) DEFAULT NULL,
+  `loc_temp` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_locationdata`
 --
 
-INSERT INTO `tb_locationdata` (`loc_id`, `loc_name`, `loc_district`, `water_id`, `fodder_id`, `mobility_id`, `loc_altitude`, `loc_humidity`, `loc_temp`, `loc_latitude`, `loc_longitude`) VALUES
-('LO001', 'Depok', 'Bantul', 'LO001', 'LO001', 'LO001', '28.80', '49.50', '35.60', '-80092722', '1102965559'),
-('LO002', 'Jetis', 'Bantul', 'LO002', 'LO002', 'LO002', '70.10', '33.00', '37.80', '-79021438', '1103735387'),
-('LO003', 'Piyungan', 'Bantul', 'LO003', 'LO003', 'LO003', '120.28', '45.00', '36.50', '-78348856', '1104818811'),
-('LO004', 'Playen', 'Gunung Kidul', 'LO004', 'LO004', 'LO004', '207.82', '69.00', '28.90', '-79404329', '1105509500'),
-('LO005', 'Pathuk', 'Gunung Kidul', 'LO005', 'LO005', 'LO005', '185.37', '68.00', '30.00', '-78776562', '1105362193'),
-('LO006', 'Pakem', 'Sleman', 'LO006', 'LO006', 'LO006', '650.75', '69.00', '28.00', '-76229514', '1104237670'),
-('LO007', 'Ngepring', 'Sleman', 'LO007', 'LO007', 'LO007', '686.54', '60.00', '28.00', '-76136160', '1104112415'),
-('LO008', 'Klepu', 'Sleman', 'LO008', 'LO008', 'LO008', '162.72', '48.00', '32.00', '-77453769', '1102559989');
+INSERT INTO `tb_locationdata` (`loc_id`, `loc_name`, `loc_district`, `loc_longitude`, `loc_latitude`, `water_id`, `fodder_id`, `mobility_id`, `loc_altitude`, `loc_humidity`, `loc_temp`) VALUES
+('LO001', 'Depok', 'Bantul', '110.2965559', '-8.0092722', '2.00', '4.00', '4.00', '28.80', '49.50', '35.60'),
+('LO002', 'Jetis', 'Bantul', '110.3735387', '-7.9021438', '3.00', '4.00', '4.00', '70.10', '33.00', '37.80'),
+('LO003', 'Piyungan', 'Bantul', '110.4818811', '-7.8348856', '3.00', '3.00', '2.00', '120.28', '45.00', '36.50'),
+('LO004', 'Playen', 'Gunung_Kidul', '110.5509500', '-7.9404329', '2.00', '3.00', '2.00', '207.82', '69.00', '28.90'),
+('LO005', 'Pathuk', 'Gunung_Kidul', '110.5362193', '-7.8776562', '3.00', '2.00', '3.00', '185.37', '68.00', '30.00'),
+('LO006', 'Pakem', 'Sleman', '110.4237670', '-7.6229514', '4.00', '4.00', '3.00', '650.75', '69.00', '28.00'),
+('LO007', 'Ngepring', 'Sleman', '110.4112415', '-7.6136160', '4.00', '3.00', '4.00', '686.54', '60.00', '28.00'),
+('LO008', 'Klepu', 'Sleman', '110.2559989', '-7.7453769', '3.00', '4.00', '4.00', '162.72', '48.00', '32.00'),
+('LO009', 'Banjararum', 'Kulon_Progo', '110.2498808', '-7.7811758', '4.00', '3.00', '4.00', '141.00', '45.00', '32.00'),
+('LO010', 'Sentolo', 'Kulon_Progo', '110.2113234', '-7.8714025', '3.00', '2.00', '2.00', '152.97', '26.00', '33.00'),
+('LO011', 'Purwoharjo', 'Kulon_Progo', '110.2028620', '-7.7077546', '4.00', '3.00', '2.00', '521.41', '49.00', '30.00'),
+('LO012', 'Temon', 'Kulon_Progo', '110.0244408', '-7.8936617', '2.00', '3.00', '1.00', '57.04', '57.40', '33.50');
 
 -- --------------------------------------------------------
 
@@ -141,13 +149,13 @@ INSERT INTO `tb_locationdata` (`loc_id`, `loc_name`, `loc_district`, `water_id`,
 --
 
 CREATE TABLE `tb_mobilitydata` (
-  `mobility_id` varchar(100) NOT NULL,
-  `value_1` int(5) NOT NULL,
-  `value_2` int(5) NOT NULL,
-  `value_3` int(5) NOT NULL,
-  `value_4` int(5) NOT NULL,
-  `value_total` int(5) NOT NULL,
-  `mobility_value` varchar(20) NOT NULL DEFAULT ''
+  `mobility_id` varchar(20) NOT NULL,
+  `value_1` int(5) DEFAULT NULL,
+  `value_2` int(5) DEFAULT NULL,
+  `value_3` int(5) DEFAULT NULL,
+  `value_4` int(5) DEFAULT NULL,
+  `value_total` int(5) DEFAULT NULL,
+  `mobility_value` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -157,12 +165,16 @@ CREATE TABLE `tb_mobilitydata` (
 INSERT INTO `tb_mobilitydata` (`mobility_id`, `value_1`, `value_2`, `value_3`, `value_4`, `value_total`, `mobility_value`) VALUES
 ('LO001', 1, 1, 1, 1, 4, 'very good'),
 ('LO002', 1, 1, 1, 1, 4, 'very good'),
-('LO003', 0, 0, 1, 1, 2, 'average'),
-('LO004', 1, 1, 1, 0, 3, 'good'),
+('LO003', 0, 1, 0, 1, 2, 'average'),
+('LO004', 1, 1, 0, 0, 2, 'average'),
 ('LO005', 1, 1, 1, 0, 3, 'good'),
-('LO006', 1, 1, 1, 1, 4, 'very good'),
+('LO006', 1, 0, 1, 1, 3, 'good'),
 ('LO007', 1, 1, 1, 1, 4, 'very good'),
-('LO008', 1, 1, 1, 1, 4, 'very good');
+('LO008', 1, 1, 1, 1, 4, 'very good'),
+('LO009', 1, 1, 1, 1, 4, 'very good'),
+('LO010', 1, 0, 0, 1, 2, 'average'),
+('LO011', 1, 0, 1, 0, 2, 'average'),
+('LO012', 0, 1, 0, 0, 1, 'bad');
 
 -- --------------------------------------------------------
 
@@ -174,17 +186,17 @@ CREATE TABLE `tb_tempresult` (
   `loc_id` varchar(20) NOT NULL,
   `loc_name` varchar(35) NOT NULL,
   `loc_district` varchar(50) NOT NULL,
-  `loc_status` varchar(20) NOT NULL,
-  `C1` decimal(5,2) DEFAULT NULL,
-  `C2` decimal(5,2) DEFAULT NULL,
-  `C3` decimal(5,2) DEFAULT NULL,
-  `C4` decimal(5,2) DEFAULT NULL,
-  `C5` decimal(5,2) DEFAULT NULL,
-  `C6` decimal(5,2) DEFAULT NULL,
-  `saw_sum` decimal(5,2) DEFAULT NULL,
-  `loc_latitude` decimal(10,7) DEFAULT NULL,
-  `loc_longitude` decimal(10,7) DEFAULT NULL,
-  `loc_category` int(5) DEFAULT NULL
+  `category_id` int(11) NOT NULL,
+  `loc_longitude` text NOT NULL,
+  `loc_latitude` text NOT NULL,
+  `loc_status` varchar(25) NOT NULL,
+  `saw_sum` double(7,2) NOT NULL,
+  `C1` double(7,2) DEFAULT NULL,
+  `C2` double(7,2) DEFAULT NULL,
+  `C3` double(7,2) DEFAULT NULL,
+  `C4` double(7,2) DEFAULT NULL,
+  `C5` double(7,2) DEFAULT NULL,
+  `C6` double(7,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -197,14 +209,14 @@ CREATE TABLE `tb_tempselected` (
   `loc_id` varchar(20) NOT NULL,
   `loc_name` varchar(35) NOT NULL,
   `loc_district` varchar(100) NOT NULL,
+  `loc_longitude` text NOT NULL,
+  `loc_latitude` text NOT NULL,
   `C1` decimal(5,2) DEFAULT NULL,
   `C2` decimal(5,2) DEFAULT NULL,
   `C3` decimal(5,2) DEFAULT NULL,
   `C4` decimal(5,2) DEFAULT NULL,
   `C5` decimal(5,2) DEFAULT NULL,
-  `C6` decimal(5,2) DEFAULT NULL,
-  `loc_latitude` decimal(10,7) DEFAULT NULL,
-  `loc_longitude` decimal(10,7) DEFAULT NULL
+  `C6` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -225,13 +237,6 @@ CREATE TABLE `tb_userdata` (
   `role` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tb_userdata`
---
-
-INSERT INTO `tb_userdata` (`user_id`, `username`, `full_name`, `student_id`, `email`, `password`, `hash`, `active`, `role`) VALUES
-(2, 'aureliadsp', 'Aurelia Dyah', '0976', 'aureliadsp@gmail.com', 'f79ec22cca0aea459367828af827ea45', 'be83ab3ecd0db773eb2dc1b0a17836a1', 0, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -239,13 +244,13 @@ INSERT INTO `tb_userdata` (`user_id`, `username`, `full_name`, `student_id`, `em
 --
 
 CREATE TABLE `tb_waterdata` (
-  `water_id` varchar(100) NOT NULL,
-  `value_1` int(5) NOT NULL,
-  `value_2` int(5) NOT NULL,
-  `value_3` int(5) NOT NULL,
-  `value_4` int(5) NOT NULL,
-  `value_total` int(5) NOT NULL,
-  `water_value` varchar(20) NOT NULL DEFAULT ''
+  `water_id` varchar(20) NOT NULL,
+  `value_1` int(5) DEFAULT NULL,
+  `value_2` int(5) DEFAULT NULL,
+  `value_3` int(5) DEFAULT NULL,
+  `value_4` int(5) DEFAULT NULL,
+  `value_total` int(5) DEFAULT NULL,
+  `water_value` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -254,13 +259,17 @@ CREATE TABLE `tb_waterdata` (
 
 INSERT INTO `tb_waterdata` (`water_id`, `value_1`, `value_2`, `value_3`, `value_4`, `value_total`, `water_value`) VALUES
 ('LO001', 1, 0, 0, 1, 2, 'average'),
-('LO002', 1, 0, 1, 1, 3, 'good'),
-('LO003', 1, 0, 1, 1, 3, 'good'),
+('LO002', 1, 1, 0, 1, 3, 'good'),
+('LO003', 1, 1, 0, 1, 3, 'good'),
 ('LO004', 0, 1, 1, 0, 2, 'average'),
-('LO005', 0, 1, 1, 0, 2, 'average'),
+('LO005', 1, 1, 1, 0, 3, 'good'),
 ('LO006', 1, 1, 1, 1, 4, 'very good'),
 ('LO007', 1, 1, 1, 1, 4, 'very good'),
-('LO008', 0, 1, 1, 1, 3, 'good');
+('LO008', 0, 1, 1, 1, 3, 'good'),
+('LO009', 1, 1, 1, 1, 4, 'very good'),
+('LO010', 0, 1, 1, 1, 3, 'good'),
+('LO011', 1, 1, 1, 1, 4, 'very good'),
+('LO012', 1, 0, 0, 1, 2, 'average');
 
 --
 -- Indexes for dumped tables
@@ -288,10 +297,7 @@ ALTER TABLE `tb_fodderdata`
 -- Indexes for table `tb_locationdata`
 --
 ALTER TABLE `tb_locationdata`
-  ADD PRIMARY KEY (`loc_id`),
-  ADD KEY `water_id` (`water_id`),
-  ADD KEY `fodder_id` (`fodder_id`),
-  ADD KEY `mobility_id` (`mobility_id`);
+  ADD PRIMARY KEY (`loc_id`);
 
 --
 -- Indexes for table `tb_mobilitydata`
@@ -331,9 +337,7 @@ ALTER TABLE `tb_waterdata`
 -- AUTO_INCREMENT for table `tb_userdata`
 --
 ALTER TABLE `tb_userdata`
-  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
-
+  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

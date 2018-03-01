@@ -73,12 +73,12 @@ CREATE TABLE `tb_criteria` (
 --
 
 INSERT INTO `tb_criteria` (`cri_id`, `criteria_name`, `type`, `type_name`) VALUES
-('C1', 'waterid', 1, 'benefit'),
-('C2', 'fodderid', 1, 'benefit'),
-('C3', 'mobid', 1, 'benefit'),
-('C4', 'altitude', 1, 'benefit'),
-('C5', 'humidity', 1, 'benefit'),
-('C6', 'temperature', 2, 'cost');
+('C1', 'water_id', 1, 'benefit'),
+('C2', 'fodder_id', 1, 'benefit'),
+('C3', 'mobility_id', 1, 'benefit'),
+('C4', 'loc_altitude', 1, 'benefit'),
+('C5', 'loc_humidity', 1, 'benefit'),
+('C6', 'loc_temp', 2, 'cost');
 
 -- --------------------------------------------------------
 

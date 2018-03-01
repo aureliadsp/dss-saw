@@ -25,12 +25,16 @@
     $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
     mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
+    if(empty($_SESSION)) // if the session not yet started 
+      session_start();
+
     if( isset( $_GET['selectanimal'] ) AND isset( $_GET['weight']) AND isset( $_GET['chk_loc']) )
     {
       $_SESSION['m_animalIDsess'] = $_GET['selectanimal']; // Get animal
       $m_criteriaweight = $_GET['weight']; // Get weight
       $m_location = $_GET['chk_loc']; // Get location
 
+      // -------------------------------------------------------------------------- Normalize weight
       $m_totalweight = array_sum($m_criteriaweight);
       foreach ($m_criteriaweight as $w) 
       {
@@ -40,6 +44,7 @@
       $_SESSION['m_weightsess'] = $m_weightfinal; // save to session
       $_SESSION['m_locationsess'] = $m_location; // save location to session
 
+      // ------------------------------------------------------------------------- Copy data from location data to temporary sel
       $querylocedit = mysqli_query($connect_db, "SELECT w.value_total, f.value_total, m.value_total, l.* 
                       FROM tb_locationdata l 
                       JOIN tb_waterdata w ON l.loc_id = w.water_id 
@@ -161,7 +166,7 @@
               <br>
               <li class="active"><a href="#tab_1" data-toggle="tab"> <i class="fa fa-paw"></i> Edit data Lokasi </a></li>
             </ul>
-            <form action="processsaw.php" method="get">
+            <form action="getscaledata.php" method="get">
               <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                   <center>
@@ -192,9 +197,10 @@
                       <?php
                         //-------------------------------------------------------SELECT VALUE TO BE EDITED
                         $sqlgettemporary = mysqli_query($connect_db, "SELECT * FROM tb_tempselected");
+                        $sqlcolumn = mysqli_num_fields($sqlgettemporary);
                         while($row = mysqli_fetch_row($sqlgettemporary))
                         {
-                          for ($i = 0; $i < count($sqlgettemporary); $i++) { 
+                          for ($i = 0; $i < ($sqlcolumn/2); $i++) { 
                             echo "<tr>";
                             for ($j = 0; $j < 5 ; $j++) { 
                               echo "<td>" . $row[$j] . "</td>";
@@ -208,14 +214,10 @@
                     </tbody>
                   </table>
                     <br><br>
-                    
-                    <a class="btn btn-primary btnNext" >Next</a>
+                    <button type="Submit" name="update_tempselect" class="btn btn-primary"> Start </button>
                     <br><br>
                     </div>
-                  </center>
                 </div>
-                <button type="submit" class="btn btn-primary"> Start </button>
-
                   </center>
                   </div>
                 </div>

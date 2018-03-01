@@ -26,7 +26,7 @@
     mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
     $sqlanimal = mysqli_query($connect_db, "SELECT animal_id, animal_name FROM tb_animaldata");
-    $sqlcriteria = mysqli_query($connect_db, "SELECT cri_id, cri_name, type FROM tb_criteria");
+    $sqlcriteria = mysqli_query($connect_db, "SELECT cri_id, criteria_name, type_name FROM tb_criteria");
     $sqllocation = mysqli_query($connect_db,"SELECT loc_id, loc_name, loc_district FROM tb_locationdata");
   ?>
 

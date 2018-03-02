@@ -19,7 +19,7 @@
 	
 	array_unshift($sess_chunkdata, null); //transpose sess_chunkdata norm
 	$arr_chunkdata = call_user_func_array('array_map', $sess_chunkdata);
-	$arr_datatoslice = call_user_func_array('array_map', $sess_chunkdata);
+	$arr_datatoslice = $arr_chunkdata;
 	
 	$temperature = $arr_chunkdata['5'];
 	foreach ( $temperature as $tempvalue ) 
@@ -101,11 +101,11 @@
 	//------------------------------------------end of get value of altitude, humidity, and temperature
 
 	//------------------------------------------find quartile $ median
-	$arr_dataslice = array_slice($arr_datatoslice, 6);
-	$countslice = count($arr_dataslice);
+	//$arr_dataslice = array_slice($arr_datatoslice, 6);
+	$countslice = count($arr_datatoslice);
 
 	$slicesort = array();
-	foreach ( $arr_dataslice as $col ) 
+	foreach ( $arr_datatoslice as $col ) 
 	{
     	array_multisort($col);
    		$slicesort[] = $col;
@@ -138,11 +138,11 @@
 		
 	for ( $i = 0; $i < $countslice; $i++ ) 
 	{ 
-		$c = count($arr_dataslice[$i]);
-		$min = min($arr_dataslice[$i]);
-		$max = max($arr_dataslice[$i]);
+		$c = count($arr_datatoslice[$i]);
+		$min = min($arr_datatoslice[$i]);
+		$max = max($arr_datatoslice[$i]);
 
-		foreach ( $arr_dataslice[$i] as $k ) 
+		foreach ( $arr_datatoslice[$i] as $k ) 
 		{
 			if ($k <= $max && $k < $quartile3[$i]) {
 				$cval = 4;
@@ -170,7 +170,19 @@
 
     //create new array with put all of criteria value
     $arr_C1merge = array_merge($water_value, $fodder_value, $mob_value, $new_alt, $new_hum, $new_temp, $new_cval); // combine all result
-    $arr_chunkC1 = array_chunk($c1, $c);
-    	
+    $arr_chunkC1 = array_chunk($arr_C1merge, $c);
+    
 	$_SESSION['C1_matrix'] = $arr_chunkC1;
+	echo '<pre>'; echo 'water_value '; print_r($water_value); echo '</pre>';
+    echo '<pre>'; echo 'fodder_value '; print_r($fodder_value); echo '</pre>';
+    echo '<pre>'; echo 'mob_value '; print_r($mob_value); echo '</pre>';
+    echo '<pre>'; echo 'new_alt '; print_r($new_alt); echo '</pre>';
+    echo '<pre>'; echo 'new_hum '; print_r($new_hum); echo '</pre>';
+    echo '<pre>'; echo 'new_temp '; print_r($new_temp); echo '</pre>';
+    echo '<pre>'; echo 'arr_chunkC1 '; print_r($arr_chunkC1); echo '</pre>';
+    
+    /*echo '<pre>'; echo 'new_cval'; echo '</pre>';
+    echo '<pre>'; print_r($new_cval); echo '</pre>';
+	echo '<pre>'; echo 'arr_chunkC1'; echo '</pre>';
+    echo '<pre>'; print_r($arr_chunkC1); echo '</pre>';*/
 ?>

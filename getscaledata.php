@@ -22,8 +22,6 @@
 </head>
 
   <?php
-    include ($_SERVER["DOCUMENT_ROOT"] . '/dss-saw/function/scalingdata.php');
-
     $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
     mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
@@ -157,8 +155,11 @@
                   <center>
                     <br>
                     <?php
-echo '<pre>'; print_r($chunk_data); echo '</pre>';
-?>
+                      include ($_SERVER["DOCUMENT_ROOT"] . '/dss-saw/function/scalingdata.php');
+                      //echo '<pre>'; print_r($chunk_data); echo '</pre>';
+
+                    ?>
+                    <a href="dsssawprocess.php">clickhere</a>
                   </center>
                 </div>
               </div>

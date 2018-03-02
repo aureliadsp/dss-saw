@@ -45,19 +45,22 @@
       $_SESSION['m_locationsess'] = $m_location; // save location to session
 
       // ------------------------------------------------------------------------- Copy data from location data to temporary sel
-      $querylocedit = mysqli_query($connect_db, "SELECT w.value_total, f.value_total, m.value_total, l.* 
+      $querylocedit = mysqli_query($connect_db, "SELECT l.loc_id, l.loc_name, l.loc_district, 
+                      l.loc_longitude, l.loc_latitude,  w.value_total, f.value_total, m.value_total, 
+                      l.loc_altitude, l.loc_humidity, l.loc_temp
                       FROM tb_locationdata l 
                       JOIN tb_waterdata w ON l.loc_id = w.water_id 
                       JOIN tb_fodderdata f ON l.loc_id = f.fodder_id 
                       JOIN tb_mobilitydata m ON l.loc_id = m.mobility_id 
                       WHERE l.loc_id IN ('" . implode("','",$m_location) . "')" );
 
+      //w.value_total, f.value_total, m.value_total, l.* 
       $finalcb = array();
       $m_locnewID = array();
       while($rowloc= mysqli_fetch_row($querylocedit)) 
       {
         $finalcb[]= $rowloc;
-        $m_locnewID[] = $rowloc['3'];
+        $m_locnewID[] = $rowloc['0'];
         $_SESSION['m_locnewID'] = $m_locnewID;
       }
 
@@ -65,7 +68,8 @@
       {
         foreach ($m_locnewID as &$id) 
         {
-          $sqladdid = mysqli_query($connect_db, "INSERT INTO tb_tempselected SELECT * FROM tb_locationdata WHERE tb_locationdata.loc_id IN ('".$id."')");
+          /* $sqladdid = mysqli_query($connect_db, "INSERT INTO tb_tempselected SELECT * FROM tb_locationdata WHERE tb_locationdata.loc_id IN ('".$id."')"); */
+
         }
       }
     }
@@ -177,38 +181,29 @@
                     <div class="form-group">
                     <table id="choosecrit" class="table table-bordered table-striped">
                       <thead>
-                      <?php
-                        $getcolumn = mysqli_query($connect_db,"DESCRIBE tb_tempselected");
-                        while($row = mysqli_fetch_array($getcolumn))
-                        {
-                          echo "<th>" . $row['Field'] . "</th>";
-                          $field[] = $row['Field'];
-                        }
-                      ?>
+                      <th> ID Lokasi </th>
+                      <th> Nama Lokasi </th>
+                      <th> Kabupaten </th>
+                      <th> Longitude </th>
+                      <th> Latitude </th>
+                      <th> K.Air </th>>
+                      <th> K.Pakan </th>
+                      <th> K.Akses </th>
+                      <th> Ketinggian </th>
+                      <th> Kelembapan </th>
+                      <th> Suhu </th>
                       </thead>
                       <tbody>
                       <?php
-
-                        /*echo '<pre>'; print_r($finalcb); echo '</pre>';
-                        echo '<pre>'; print_r($m_locnewID); echo '</pre>';
-                        echo '<pre>'; print_r($_SESSION['m_animalIDsess']); echo '</pre>';
-                        echo '<pre>'; print_r($m_locnewID); echo '</pre>';*/
-                      ?>
-                      <?php
-                        //-------------------------------------------------------SELECT VALUE TO BE EDITED
-                        $sqlgettemporary = mysqli_query($connect_db, "SELECT * FROM tb_tempselected");
-                        $sqlcolumn = mysqli_num_fields($sqlgettemporary);
-                        while($row = mysqli_fetch_row($sqlgettemporary))
+                        foreach ( $finalcb as $fbc )
                         {
-                          for ($i = 0; $i < ($sqlcolumn/2); $i++) { 
-                            echo "<tr>";
-                            for ($j = 0; $j < 5 ; $j++) { 
-                              echo "<td>" . $row[$j] . "</td>";
-                            }
-                            for ($j = 5; $j < count($field) ; $j++) { 
-                              echo "<td><input type=\"text\" size=\"4\" name=\"" . $i++ ."[]\" id=\"" .$row[$j] ."\" value=" . $row[$j] . "></td>";
-                            }
+                          echo "<tr>";
+                          $i = 0;
+                          foreach ($fbc as $a) 
+                          {
+                            echo "<td><input type=\"text\" size=\"7\" name=\"" . $i++ ."[]\" id=\"" .$a."\" value=" . $a . "></td>";
                           }
+                          echo "</tr>";
                         }
                       ?>
                     </tbody>

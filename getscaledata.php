@@ -22,7 +22,7 @@
 </head>
 
   <?php
-    include ($_SERVER["DOCUMENT_ROOT"] . 'function/scalingdata.php');
+    include ($_SERVER["DOCUMENT_ROOT"] . '/dss-saw/function/scalingdata.php');
 
     $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
     mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
@@ -30,7 +30,7 @@
     if(empty($_SESSION)) // if the session not yet started 
       session_start();
 
-    $sql_maxcriteria = mysqli_query($connect_db, "SELECT no FROM tb_criteria");
+    $sql_maxcriteria = mysqli_query($connect_db, "SELECT cri_id FROM tb_criteria");
     while (mysqli_fetch_array($sql_maxcriteria)) 
     {
       $get_maxcriteria[] = $sql_maxcriteria;
@@ -44,7 +44,7 @@
       $val_editdata = count($_GET['0']);
       for ($i=0; $i <  $val_editdata; $i++) 
       { 
-        for ($j=0; $j < $get_maxcriteria; $j++) 
+        for ($j=5; $j < 11; $j++) 
         { 
           $get_editdata[] =$_GET[$j][$i];
         }
@@ -156,7 +156,9 @@
                 <div class="tab-pane active" id="tab_1">
                   <center>
                     <br>
-
+                    <?php
+echo '<pre>'; print_r($chunk_data); echo '</pre>';
+?>
                   </center>
                 </div>
               </div>

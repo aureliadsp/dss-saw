@@ -173,8 +173,6 @@
                         var info = [];
                         
                         <?php
-                          //$query = mysql_query("SELECT `t`.*,`c`.* FROM `tempresult` AS `t` LEFT JOIN `category` AS `c` ON `t`.`categoryid` = `c`.`id`");
-                          //$i = 0;
                           $js = "";
                           
                           for ($i = 0; $i < count($loc_finaldata); $i++)
@@ -186,7 +184,7 @@
                                     js_status['.$i.'] = "'.$loc_finaldata[$i]['4'].'";
                                     y['.$i.'] = "'.$loc_finaldata[$i]['5'].'";
                                     x['.$i.'] = "'.$loc_finaldata[$i]['6'].'";
-                                    
+
 
                                   '
 

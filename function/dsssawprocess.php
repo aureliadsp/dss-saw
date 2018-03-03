@@ -59,60 +59,41 @@
 	}
 	//--------------------------------------------------------------------------END OF WEIGHTING PROCESS
 
-	//--------------------------------------------------------------------------INSERT RESULT INTO DB TEMPORARY
-
-	/*$sql9 = mysqli_query("SELECT * FROM tempselect");
-	$alternatifID = array();
-	$locname = array();
-	$locdis = array();
-	$longitude = array();
-	$latitude = array();
-	while ($alternatif = mysql_fetch_array($sql9)) {
-		$alternatifID[] = $alternatif['loc_id'];
-		$locname[] = $alternatif['loc_name'];
-		$locdis[] = $alternatif['loc_district'];
-		$longitude[] = $alternatif['longitude'];
-		$latitude[] = $alternatif['latitude'];
-	}
-	$criteriastat = $_SESSION['statustemp'];
-	foreach ($alternatifID as $num) {
-		$cate1[] = 2;
-	}
-
-	// urutan : ID, status, C1, C2, C3, C4, C5, C6, result
-	$finalmerge = array_merge($alternatifID, $locname, $locdis, $cate1, $longitude, $latitude, $criteriastat, $sumresult, $c1weight);
-	$final1 = array_chunk($finalmerge, $cc1);
-	$cc3 = count($final1);
-	//tranpose final1
-	array_unshift($final1, null);
-		$FINALRESULT = call_user_func_array('array_map', $final1);
-
-
-	//inserting
-	if(is_array($FINALRESULT)) {
-
-		$queryi = "INSERT INTO tempresult VALUES ";
-
-		foreach($FINALRESULT as $key) {
-		    $row_values = [];
-		    foreach($key as $s_key => $s_value) {
-		        $row_values[] = '"'.$s_value.'"';
-		    }
-		    $all_values[] = '('.implode(',', $row_values).')';
-		}
-
-
-		//Implode all rows
-		$queryi .= implode(',', $all_values);
-		$mysqladd = mysql_query($queryi);
+	//-------------------------------------------------------------------------- GET DATA TO PUT INTO ONE
+	$m_locID = $_SESSION['m_locnewID']; // Get location
+	$querylocget = mysqli_query($connect_db, "SELECT l.loc_id, l.loc_name, l.loc_district, 
+                      l.loc_longitude, l.loc_latitude
+                      FROM tb_locationdata l
+                      WHERE l.loc_id IN ('" . implode("','",$m_locID) . "')" );
+	while($rowloc= mysqli_fetch_row($querylocget)) 
+    {
+    	$dataget[] = $rowloc;
     }
-	//--------------------------------------------------------------------------END OF INSERT RESULT
+
+   	for($i = 0; $i < count($m_locID); $i++)
+    {
+		$toSet_locID[] = $dataget[$i]['0'];
+    	$toSet_locName[] = $dataget[$i]['1'];
+    	$toSet_locDis[] = $dataget[$i]['2'];
+    	$toSet_locLongi[] = $dataget[$i]['3'];
+    	$toSet_locLati[] = $dataget[$i]['4'];
+    }
+
+    $cri_tempstat = $_SESSION['sess_tempstatus'];
+	//-------------------------------------------------------------------------- END OF GET DATA TO PUT INTO ONE
 
 	//-------------------------------------------------------------------------Select category
-	$sql13 = mysql_query("UPDATE tempresult SET categoryid = 1 WHERE categoryid = 2 ORDER BY sum DESC LIMIT 3");*/
+	$merge_final = array_merge($toSet_locID, $toSet_locName, $toSet_locDis, $toSet_locLongi, $toSet_locLati, 
+								$cri_tempstat, $c1weight, $sumresult);
+	$chunk_final = array_chunk($merge_final, $cc1);
+	//tranpose final1
+	array_unshift($chunk_final, null);
+		$FINALRESULT = call_user_func_array('array_map', $chunk_final);
+
+	$_SESSION['FINALRESULT'] = $FINALRESULT;
 	echo $cc1; echo $cc2;
-	echo '<pre>'; echo 'c1norm '; print_r($c1norm); echo '</pre>';
-    echo '<pre>'; echo 'fodder_value '; print_r($fodder_value); echo '</pre>';
-    
+	echo '<pre>'; echo 'dataget '; print_r($dataget); echo '</pre>';
+	echo '<pre>'; echo 'toSet_locID '; print_r($toSet_locID); echo '</pre>';
+    echo '<pre>'; echo 'FINALRESULT '; print_r($FINALRESULT); echo '</pre>';
     
 ?>

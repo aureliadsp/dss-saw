@@ -5062,4 +5062,12 @@ table.text-center th {
     background-color: #ccc;
     border-radius: 3px;
   }
+
+  .spin
+  {
+    background: #444; /* outline */
+    {
+      background: #EEE; /* hand */
+    }
+  }
 }

@@ -54,7 +54,6 @@
                       JOIN tb_mobilitydata m ON l.loc_id = m.mobility_id 
                       WHERE l.loc_id IN ('" . implode("','",$m_location) . "')" );
 
-      //w.value_total, f.value_total, m.value_total, l.* 
       $finalcb = array();
       $m_locnewID = array();
       while($rowloc= mysqli_fetch_row($querylocedit)) 
@@ -62,15 +61,6 @@
         $finalcb[]= $rowloc;
         $m_locnewID[] = $rowloc['0'];
         $_SESSION['m_locnewID'] = $m_locnewID;
-      }
-
-      if(is_array($m_locnewID))
-      {
-        foreach ($m_locnewID as &$id) 
-        {
-          /* $sqladdid = mysqli_query($connect_db, "INSERT INTO tb_tempselected SELECT * FROM tb_locationdata WHERE tb_locationdata.loc_id IN ('".$id."')"); */
-
-        }
       }
     }
   ?>
@@ -201,7 +191,15 @@
                           $i = 0;
                           foreach ($fbc as $a) 
                           {
-                            echo "<td><input type=\"text\" size=\"7\" name=\"" . $i++ ."[]\" id=\"" .$a."\" value=" . $a . "></td>";
+                            if ( $i < 5 )
+                            {
+                              echo "<td>" . $a . "</td>";
+                            }
+                            else
+                            {
+                              echo "<td><input type=\"text\" size=\"7\" name=\"inputloc[]\" id=\"" .$a."\" value=" . $a . "></td>";
+                            }
+                            $i++;
                           }
                           echo "</tr>";
                         }

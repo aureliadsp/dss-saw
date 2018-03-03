@@ -19,36 +19,19 @@
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAxoHNZ2GR2NzpmSkLsWXN4AcAVCHExwIA"></script>
+  <script type="text/javascript" src="assets/js/jquery.js"></script>
+  <script type="text/javascript" src="assets/js/markerclusterer_packed.js"></script>
 </head>
-
-  <?php
+<?php
     $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
     mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
     if(empty($_SESSION)) // if the session not yet started 
       session_start();
 
-    $sql_maxcriteria = mysqli_query($connect_db, "SELECT cri_id FROM tb_criteria");
-    while (mysqli_fetch_array($sql_maxcriteria)) 
-    {
-      $get_maxcriteria[] = $sql_maxcriteria;
-    }
-
-    $get_maxcriteria = count($get_maxcriteria);
-    $_SESSION['get_maxcriteria'] = $get_maxcriteria;
-    //------------------------------------------------------------------------ Store edit data to new variable
-    if (isset($_GET['update_tempselect'])) 
-    {
-      $val_editdata = count($_GET['inputloc']);
-      for ($i=0; $i <  $val_editdata; $i++) 
-      { 
-        $get_editdata[] =$_GET['inputloc'][$i];
-      }
-    }
-    //---------------------------------------------------------------------- Chunk array based on criteria
-    $chunk_data = array_chunk($get_editdata, $get_maxcriteria);
-    $_SESSION['chunk_seldata'] = $chunk_data;
-  ?>
+    $loc_finaldata = $_SESSION['FINALRESULT'];
+?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -147,51 +130,135 @@
             <form action="getscaledata.php" method="get">
               <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
-                  
-                    <br>
-                    <?php
-                      include ($_SERVER["DOCUMENT_ROOT"] . '/dss-saw/function/scalingdata.php');
-                      include ($_SERVER["DOCUMENT_ROOT"] . '/dss-saw/function/dsssawprocess.php');
-                    ?>
-                    <center>
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#directing"> Mulai proses </button>
-                    </center>
-                    <!-- Modal -->
-                    
-                    <div class="modal fade" id="directing" role="dialog">
-                      <div class="modal-dialog">
-                      
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h4 class="modal-title"> Processing </h4>
-                          </div>
-                          <div class="modal-body">
-                            <br><br>
-                            <center> Mohon tunggu sebentar, sedang dalam proses perhitungan. 
-                            <br><br>
-                              <i class="fa fa-refresh fa-spin"></i>
-                              <?php
-                                if($trigger)
-                                {
-                                  echo "<span id=\"countdown\">3</span>";
-                                }
-                              ?>
-                            </center>
-                            <br><br>
-                          </div>
-                          <div class="modal-footer">
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
+                  <script type="text/javascript">
+                    var peta;
+                    var js_locid = new Array();
+                    var js_locname = new Array();
+                    var js_locdis = new Array();
+                    var js_sumres = new Array();
+                    var js_status = new Array();
+                    var x        = new Array();
+                    var y        = new Array();
+                    var i;
+                    var url;
+                    var gambar_tanda;
 
-                  </center>
+                    function mymap() {
+                        var yogyakarta = new google.maps.LatLng(-7.756370,110.382347);
+
+                        var myStyles =[
+                          {
+                              featureType: "poi",
+                              elementType: "labels",
+                              stylers: [
+                                    { visibility: "off" }
+                              ]
+                          }
+                        ];
+
+                        var petaoption = {
+                            zoom: 10,
+                            center: yogyakarta,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP,
+                            styles: myStyles 
+                            };
+
+                        peta = new google.maps.Map(document.getElementById("map_canvas"),petaoption);
+                        takedb();
+
+                    }
+
+                    function takedb(){
+                        var markers = [];
+                        var info = [];
+                        
+                        <?php
+                          //$query = mysql_query("SELECT `t`.*,`c`.* FROM `tempresult` AS `t` LEFT JOIN `category` AS `c` ON `t`.`categoryid` = `c`.`id`");
+                          //$i = 0;
+                          $js = "";
+                          
+                          for ($i = 0; $i < count($loc_finaldata); $i++)
+                          {
+                            $js .= 'js_locid['.$i.'] = "'.$loc_finaldata[$i]['0'].'";
+                                    js_locname['.$i.'] = "'.$loc_finaldata[$i]['1'].'";
+                                    js_locdis['.$i.'] = "'.$loc_finaldata[$i]['2'].'";
+                                    js_sumres['.$i.'] = "'.$loc_finaldata[$i]['3'].'";
+                                    js_status['.$i.'] = "'.$loc_finaldata[$i]['4'].'";
+                                    y['.$i.'] = "'.$loc_finaldata[$i]['5'].'";
+                                    x['.$i.'] = "'.$loc_finaldata[$i]['6'].'";
+                                    
+
+                                  '
+
+                          }
+                          /*while ($value = mysql_fetch_assoc($query)) {
+
+                          $js .= 'locid1['.$i.'] = "'.$value['loc_id'].'";
+                                  name1['.$i.']  = "'.$value['loc_name'].'";
+                                  district1['.$i.'] = "'.$value['loc_district'].'";
+                                  total1['.$i.'] = "'.$value['sum'].'";
+                                  status1['.$i.'] = "'.$value['status'].'";
+                                  x['.$i.'] = "'.$value['latitude'].'";
+                                  y['.$i.'] = "'.$value['longitude'].'";
+                                  set_icon("'.$value['img'].'");
+                                  
+                                  var point = new google.maps.LatLng(parseFloat(x['.$i.']),parseFloat(y['.$i.']));
+
+                                  var contentString = "<table>"+
+                                                              "<tr>"+
+                                                                  "<td><b>" + locid1['.$i.'] + "</b></td>"+
+                                                              "</tr>"+
+                                                              "<tr>"+
+                                                                  "<td>" + name1['.$i.'] + ", " + district1['.$i.'] + "</td>"+
+                                                              "<tr>"+
+                                                                  "<td>Status : <b>" + status1['.$i.'] + "</b></td>"+
+                                                              "</tr>"+
+                                                              "<tr>"+
+                                                                  "<td>Total : <b>" + total1['.$i.'] + "</b></td>"+
+                                                              "</tr>"+
+                                                          "</table>";
+
+                                  var infowindow = new google.maps.InfoWindow({
+                                      content: contentString
+                                  });
+                                  
+
+                                  tanda = new google.maps.Marker({
+                                          position: point,
+                                          map: peta,
+                                          icon: gambar_tanda,
+                                          clickable: true
+                                      });
+                                  
+                                  markers.push(tanda);
+                                  info.push(infowindow);
+
+                                  google.maps.event.addListener(markers['.$i.'], "click", function() { info['.$i.'].open(peta,markers['.$i.']); });';
+
+                          
+                              $i++;  
+                          }*/
+
+                          // kita tampilin deh output jsnya :D
+                          echo $js;
+                        ?>
+                        
+                        // nah untuk yang satu ini...kita push semua markernya kedalam array untuk dikelompokan
+                        var markerCluster = new MarkerClusterer(peta, markers);
+                        
+                    }
+
+                    // fungsi inilah yang akan menampilkan gambar ikon sesuai dengan kategori markernya sendiri
+                    function set_icon(icon){
+                        if (icon == "") {
+                        } else {
+                            gambar_tanda = "assets/icon/"+icon;
+                        }
+                    }
+                  </script>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
           <div class="box-footer">
         </div>
@@ -308,25 +375,5 @@
 <script src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
-<script type="text/javascript">
-    var seconds = 10;
-    
-    function countdown() {
-        seconds = seconds - 1;
-        if (seconds < 0) {
-            // Chnage your redirection link here
-            window.location = "result.php";
-        } else {
-            // Update remaining seconds
-            document.getElementById("countdown").innerHTML = seconds;
-            // Count down using javascript
-            window.setTimeout("countdown()", 1000);
-        }
-    }
-    
-    // Run countdown function
-    countdown();
-    
-</script>
 </body>
 </html>

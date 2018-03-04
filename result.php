@@ -15,11 +15,11 @@
   <link rel="stylesheet" href="dist/css/AdminLTE.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
     <!-- DataTables -->
-  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAxoHNZ2GR2NzpmSkLsWXN4AcAVCHExwIA"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpp6B9kDPrk0cZRRM4HsKz4Phj79KwNAU&callback=mymap"
+  type="text/javascript"></script>
   <script type="text/javascript" src="assets/js/jquery.js"></script>
   <script type="text/javascript" src="assets/js/markerclusterer_packed.js"></script>
 </head>
@@ -31,6 +31,11 @@
       session_start();
 
     $loc_finaldata = $_SESSION['FINALRESULT'];
+
+    usort($loc_finaldata, function($a, $b) {
+      return $b['12'] <=> $a['12'];
+    });
+
 ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -174,47 +179,36 @@
                         
                         <?php
                           $js = "";
+                          $imgicon = 'point.png';
                           
                           for ($i = 0; $i < count($loc_finaldata); $i++)
                           {
                             $js .= 'js_locid['.$i.'] = "'.$loc_finaldata[$i]['0'].'";
                                     js_locname['.$i.'] = "'.$loc_finaldata[$i]['1'].'";
                                     js_locdis['.$i.'] = "'.$loc_finaldata[$i]['2'].'";
-                                    js_sumres['.$i.'] = "'.$loc_finaldata[$i]['3'].'";
-                                    js_status['.$i.'] = "'.$loc_finaldata[$i]['4'].'";
-                                    y['.$i.'] = "'.$loc_finaldata[$i]['5'].'";
-                                    x['.$i.'] = "'.$loc_finaldata[$i]['6'].'";
+                                    js_sumres['.$i.'] = "'.$loc_finaldata[$i]['12'].'";
+                                    js_status['.$i.'] = "'.$loc_finaldata[$i]['6'].'";
+                                    y['.$i.'] = "'.$loc_finaldata[$i]['3'].'";
+                                    x['.$i.'] = "'.$loc_finaldata[$i]['4'].'";
+                                    set_icon("'.$imgicon.'");
 
+                                    var point = new google.maps.LatLng(parseFloat(x['.$i.']),parseFloat(y['.$i.']));
 
-                                  '
+                                    var contentString = "<table>"+
+                                                          "<tr>"+
+                                                            "<td><b>" + js_locid['.$i.'] + "</b></td>"+
+                                                          "</tr>"+
+                                                          "<tr>"+
+                                                            "<td>" + js_locname['.$i.'] + ", " + js_locdis['.$i.'] + "</td>"+
+                                                          "</tr>"+
+                                                          "<tr>"+
+                                                            "<td>Status : <b>" + js_status['.$i.'] + "</b></td>"+
+                                                          "</tr>"+
+                                                          "<tr>"+
+                                                            "<td>Total : <b>" + js_sumres['.$i.'] + "</b></td>"+
+                                                          "</tr>"+
+                                                        "</table>";
 
-                          }
-                          /*while ($value = mysql_fetch_assoc($query)) {
-
-                          $js .= 'locid1['.$i.'] = "'.$value['loc_id'].'";
-                                  name1['.$i.']  = "'.$value['loc_name'].'";
-                                  district1['.$i.'] = "'.$value['loc_district'].'";
-                                  total1['.$i.'] = "'.$value['sum'].'";
-                                  status1['.$i.'] = "'.$value['status'].'";
-                                  x['.$i.'] = "'.$value['latitude'].'";
-                                  y['.$i.'] = "'.$value['longitude'].'";
-                                  set_icon("'.$value['img'].'");
-                                  
-                                  var point = new google.maps.LatLng(parseFloat(x['.$i.']),parseFloat(y['.$i.']));
-
-                                  var contentString = "<table>"+
-                                                              "<tr>"+
-                                                                  "<td><b>" + locid1['.$i.'] + "</b></td>"+
-                                                              "</tr>"+
-                                                              "<tr>"+
-                                                                  "<td>" + name1['.$i.'] + ", " + district1['.$i.'] + "</td>"+
-                                                              "<tr>"+
-                                                                  "<td>Status : <b>" + status1['.$i.'] + "</b></td>"+
-                                                              "</tr>"+
-                                                              "<tr>"+
-                                                                  "<td>Total : <b>" + total1['.$i.'] + "</b></td>"+
-                                                              "</tr>"+
-                                                          "</table>";
 
                                   var infowindow = new google.maps.InfoWindow({
                                       content: contentString
@@ -232,21 +226,13 @@
                                   info.push(infowindow);
 
                                   google.maps.event.addListener(markers['.$i.'], "click", function() { info['.$i.'].open(peta,markers['.$i.']); });';
-
-                          
-                              $i++;  
-                          }*/
-
-                          // kita tampilin deh output jsnya :D
+                          }
+                          // print js;
                           echo $js;
                         ?>
-                        
-                        // nah untuk yang satu ini...kita push semua markernya kedalam array untuk dikelompokan
-                        var markerCluster = new MarkerClusterer(peta, markers);
-                        
+                        // Cluster all markerer
+                        var markerCluster = new MarkerClusterer(peta, markers);  
                     }
-
-                    // fungsi inilah yang akan menampilkan gambar ikon sesuai dengan kategori markernya sendiri
                     function set_icon(icon){
                         if (icon == "") {
                         } else {
@@ -254,6 +240,7 @@
                         }
                     }
                   </script>
+                     <div id="map_canvas" style="width:700px; height:500px;"></div>
                 </div>
               </div>
             </div>

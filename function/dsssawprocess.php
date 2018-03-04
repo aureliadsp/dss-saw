@@ -83,8 +83,7 @@
 	//-------------------------------------------------------------------------- END OF GET DATA TO PUT INTO ONE
 
 	//-------------------------------------------------------------------------Select category
-	$merge_final = array_merge($toSet_locID, $toSet_locName, $toSet_locDis, $toSet_locLongi, $toSet_locLati, 
-								$cri_tempstat, $c1weight, $sumresult);
+	$merge_final = array_merge($toSet_locID, $toSet_locName, $toSet_locDis, $toSet_locLongi, $toSet_locLati, $cri_tempstat, $c1weight, $sumresult);
 	$chunk_final = array_chunk($merge_final, $cc1);
 	//tranpose final1
 	array_unshift($chunk_final, null);

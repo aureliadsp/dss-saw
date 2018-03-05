@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="dist/css/AdminLTE.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
     <!-- DataTables -->
-  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -238,12 +238,6 @@
                         return true;
                       }
                     </script>
-                    <script type="text/javascript">
-                      $("#select_all").change(function () 
-                      {
-                          $("input:checkbox").prop('checked', $(this).prop("checked"));
-                      });
-                    </script>
                   <center>
                   <br><b>3. Silahkan pilih lokasi yang akan di uji dari tabel berikut :</b><br>
                   <h6>(*lokasi yang di pilih minimal 5.)</h6>
@@ -393,12 +387,12 @@
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 <!-- DataTables -->
-<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
-<script src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
-<script src="../../bower_components/fastclick/lib/fastclick.js"></script>
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
 
 <script type="text/javascript">
   $('.btnNext').click(function()
@@ -421,6 +415,11 @@
       'autoWidth'   : false
     })
   })
+</script>
+<script type="text/javascript">
+  $("#select_all").change(function () {
+    $("input:checkbox").prop('checked', $(this).prop("checked"));
+  });
 </script>
 </body>
 </html>

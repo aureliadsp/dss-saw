@@ -20,59 +20,71 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
-        <!-- start PHP code -->
         <?php
-         
-            $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-            mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+          $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+          mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
-            if(isset($_POST['email']) && !empty($_POST['email']) AND isset($_POST['password']) && !empty($_POST['password']))
+          if(isset($_POST['email']) && !empty($_POST['email']) AND isset($_POST['password']) && !empty($_POST['password']))
+          {
+            $email = mysqli_escape_string($connect_db, $_POST['email']); // Set variable for the username
+            $password = mysqli_escape_string($connect_db, md5($_POST['password'])); // Set variable for the password and convert it to an MD5 hash.
+
+            $search = mysqli_query($connect_db, "SELECT email, password, active FROM tb_userdata WHERE email='".$email."' AND password='".$password."' AND active='1'") or die(mysqli_error()); 
+            $match  = mysqli_num_rows($search);
+
+            if($match > 0)
             {
-                $email = mysqli_escape_string($connect_db, $_POST['email']); // Set variable for the username
-                $password = mysqli_escape_string($connect_db, md5($_POST['password'])); // Set variable for the password and convert it to an MD5 hash.
-
-                $search = mysqli_query("SELECT email, password, active FROM tb_userdata WHERE email='".$email."' AND password='".$password."' AND active='1'") or die(mysqli_error()); 
-                $match  = mysqli_num_rows($search);
-
-                if($match > 0)
-                {
-                    $msg = 'Login Complete! Thanks';
-                    // Set cookie / Start Session / Start Download etc...
-                }
-                else
-                {
-                    $msg = 'Login Failed! Please make sure that you enter the correct details and that you have activated your account.';
-                }
+              $msg = 'Login Complete! Thanks';
+              session_start();
+              $_SESSION['email'] = $email;
+              $status = 1;
+              header('Location:index.php');
             }
-                 
-             
+            else
+            {
+              $status = 1;
+              $msg = 'Login Failed! Please make sure that you enter the correct details and that you have activated your account.';
+            }
+          }    
         ?>
         <!-- stop PHP Code -->
+              }
 <div class="login-box">
-    <?php 
-        if(isset($msg)){ // Check if $msg is not empty
-            echo '<div class="statusmsg">'.$msg.'</div>'; // Display our message and add a div around it with the class statusmsg
-        } 
-    ?>
+    
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a href=""><b>Admin</b>LTE</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
+    <?php 
+          if ( isset($msg) && $status == 1 )
+          {  // SUCCESS
+            echo '<div class="alert alert-success alert-dismissible">
+                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                 <h4><i class="icon fa fa-check"></i> Sign In success!</h4>'.$msg.'</div>';
+            $status = 0;
+          }
+          else if (isset($msg) && $status == 0 )
+          { // FAIL
+            echo '<div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <h4><i class="icon fa fa-ban"></i> Sign In failed!</h4>'.$msg.'</div>';
+          }
+    ?>
     <p class="login-box-msg">Please sign in first!</p>
 
-    <form action="../../index2.html" method="post">
+    <form class="form-horizontal" method="post" action="">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Enter your e-mail">
+        <input type="email" class="form-control" id="email" placeholder="Enter your e-mail" name="email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Enter your password">
+        <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          <button type="submit" class="btn btn-info btn-block btn-flat">Sign In</button>
         </div>
       </div>
     </form>
@@ -84,11 +96,11 @@
 <!-- /.login-box -->
 
 <!-- jQuery 3 -->
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="../../plugins/iCheck/icheck.min.js"></script>
+<script src="plugins/iCheck/icheck.min.js"></script>
 <script>
   $(function () {
     $('input').iCheck({

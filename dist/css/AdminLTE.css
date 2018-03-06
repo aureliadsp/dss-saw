@@ -2212,7 +2212,7 @@ a:focus {
 .btn-default {
   background-color: #f4f4f4;
   color: #444;
-  border-color: #ddd;
+  border-color: #fff;
 }
 .btn-default:hover,
 .btn-default:active,
@@ -2221,7 +2221,7 @@ a:focus {
 }
 .btn-primary {
   background-color: #e34b4b;
-  border-color: #e34b4b;
+  border-color: #fff;
 }
 .btn-primary:hover,
 .btn-primary:active,
@@ -2491,7 +2491,7 @@ a:focus {
   border-color: transparent;
 }
 .nav-tabs-custom > .nav-tabs > li.active {
-  border-top-color: #3c8dbc;
+  border-top-color: #77200D;
 }
 .nav-tabs-custom > .nav-tabs > li.active > a,
 .nav-tabs-custom > .nav-tabs > li.active:hover > a {

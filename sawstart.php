@@ -12,10 +12,10 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme -->
-    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="dist/css/AdminLTE.css">
     <link rel="stylesheet" href="dist/css/skins/skin-red.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -88,7 +88,7 @@
     </header>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="height: 900px">
+  <div class="content-wrapper" style="height: 1000px">
     <div class="container">
     <section class="content-header">
       <h1><small></small></h1>
@@ -101,7 +101,7 @@
     <!-- Main content -->
     <section class="content container-fluid">
       <div class="row">
-          <div class="box box-solid" style="height: 700px">
+          <div class="box box-solid" style="height: 800px">
             <div class="box-header with-border">
               <h4><b><i class="fa fa-circle-o-notch"></i> Input Data </b></h4>
             </div>
@@ -114,7 +114,7 @@
               <li><a href="#tab_3" data-toggle="tab"> <i class="fa fa-location-arrow"></i> Pilih lokasi </a></li>
             </ul>
             <form action="editlocation.php" method="get">
-              <div class="tab-content" style="height: 700px">
+              <div class="tab-content" style="height: 800px">
                 <div class="tab-pane active" id="tab_1">
                   <center>
                     <br>
@@ -213,6 +213,7 @@
                         }
                           return retval;
                       }
+                      
                       function checkForm(form)
                       {
                         var itemsChecked = checkArray(form, "chk_loc[]");
@@ -231,14 +232,14 @@
                     table { table-layout: fixed; }
                     table th, table td { overflow: hidden; }
                   </style>
-                  <table id="chooseloc" class="table table-bordered table-striped">
+                  <table id="chooseloc" class="table table-bordered table-striped" style="width:1000px">
                     <thead>
                     <?php
                       echo "<tr>
-                        <th class=\"col-sm-1\"><label><input type=\"checkbox\" id=\"select_all\" /> ALL </label>  </th>
-                        <th class=\"col-sm-2\">ID Lokasi</th>
-                        <th class=\"col-sm-1\">Nama Lokasi</th>
-                        <th class=\"col-sm-1\">Daerah</th>
+                        <th class=\"col-md-2\"><label><input type=\"checkbox\" id=\"select_all\" /> ALL </label>  </th>
+                        <th class=\"col-md-5\">ID Lokasi</th>
+                        <th class=\"col-md-5\">Nama Lokasi</th>
+                        <th class=\"col-md-5\">Daerah</th>
                       </tr>";
                       ?>
                       </thead>
@@ -298,7 +299,7 @@
 
   $(function () {
     $('#chooseloc').DataTable({
-      'paging'      : true,
+      'paging'      : false,
       'lengthChange': false,
       'searching'   : false,
       'ordering'    : true,

@@ -29,7 +29,7 @@
             $email = mysqli_escape_string($connect_db, $_POST['email']); // Set variable for the username
             $password = mysqli_escape_string($connect_db, md5($_POST['password'])); // Set variable for the password and convert it to an MD5 hash.
 
-            $search = mysqli_query($connect_db, "SELECT email, password, active FROM tb_userdata WHERE email='".$email."' AND password='".$password."' AND active='1'") or die(mysqli_error()); 
+            $search = mysqli_query($connect_db, "SELECT email, full_name, password, active FROM tb_userdata WHERE email='".$email."' AND password='".$password."' AND active='1'") or die(mysqli_error()); 
             $match  = mysqli_num_rows($search);
 
             if($match > 0)
@@ -37,6 +37,10 @@
               $msg = 'Login Complete! Thanks';
               session_start();
               $_SESSION['email'] = $email;
+              while( $row = mysqli_fetch_array($search) )
+              {
+                $_SESSION['user_name'] = $row['full_name'];
+              }
               $status = 1;
               header('Location:index.php');
             }

@@ -38,7 +38,13 @@
         <nav class="navbar navbar-static-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="index.php" class="navbar-brand"> <img src="assets/icon/ugm_logo.png" width="50" height="50"> DSS- SAW </a>
+              <a href="index.php" class="navbar-brand"> <img src="assets/icon/ugm_logo.png" width="50" height="50"></a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+              <i class="fa fa-bars"></i>
+              </button>
+            </div>
+            <div class="navbar-header">
+              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Pembantu Penentuan Lokasi Ternak </i></a>
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
               </button>
@@ -64,23 +70,12 @@
             <div class="navbar-custom-menu">
               <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
-                  <!-- Menu Toggle Button -->
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <!-- The user image in the navbar-->
-                    <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                    <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                    <span class="hidden-xs">Alexander Pierce</span>
+                    <img src="dist/img/user-img.jpg" width="100px" height="100px" class="user-image" alt="User Image">
+                    <span class="hidden-xs"><?php echo $_SESSION['user_name']; ?></span>
                   </a>
-                  <ul class="dropdown-menu">
-                  <!-- The user image in the menu -->
-                    <li class="user-header">
-                      <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                      <p>
-                      Alexander Pierce - Web Developer
-                      <small>Member since Nov. 2012</small>
-                      </p>
-                    </li>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="signout.php"><i class="fa fa-sign-out"></i><span> Sign out</span></a></li>
                   </ul>
                 </li>
               </ul>
@@ -129,19 +124,31 @@
                 </a>
               </div>
             </div>
+            <div class="col-md-8">
             <div class="box box-solid" style="height: 800px">
               <div class="box-header with-border">
-                <center><h4><b>Selamat datang.</b></h4></center>
+                <h4>Selamat datang di aplikasi SPK (DSS) sebagai pembantu penentuan lokasi ternak</h4>
               </div>
               <div class="box-body">
+                <p align="justify">
                 Selamat datang di aplikasi berbasis website <b>sistem pendukung keputusan (decision support system)</b> mata kuliah <b>ilmu lingkungan ternak.</b>
                 Aplikasi ini dikembangkan dalam rangka meningkatkan kualitas pembelajaran Ilmu Lingkungan Ternak. Sistem pendukung keputusan merupakan sistem berbasis komputer yang dikembangkan untuk membantu pengguna untuk menggunakan data dan model dalam memecahkan masalah-masalah yang tidak terstruktur.<br><br>
                 Sistem pendukung keputusan dapat memberikan alternatif solusi bagi penguna sehingga pengambilan keputusan dapat dilakukan dengan cepat dan tepat. Dengan dukungan tambahan media interaktif diharapkan mahasiswa dapat melakukan analisis kesesuaian lingkungan pada potensi ternak secara mandiri sehingga proses belajar berikutnya melalui diskusi dapat berjalan dengan lebih interaktif.
                 <br><br>
-                Untuk memahami lebih lanjut soal aplikasi ini, silahkan mempelajari beberapa hal berikut :
+                Untuk memahami lebih lanjut soal aplikasi ini, silahkan membaca Tentang SPK di tab sebelah :
+              </p>
               </div>
             </div>
           </div>
+          <div class="col-xs-4">
+            <div class="box box-solid" style="height: 800px">
+              <div class="box-header with-border">
+                <center><h4>Tentang SPK</h4></center>
+
+              </div>
+              <div class="box-body">
+          </div>
+        </div>
         </section>
       </div>
     </div>

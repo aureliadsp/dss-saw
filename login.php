@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme -->
   <link rel="stylesheet" href="dist/css/AdminLTE.css">
-  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="dist/css/skins/skin-red.css">
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -56,7 +56,8 @@
 <div class="login-box">
     
   <div class="login-logo">
-    <a href=""><b>Admin</b>LTE</a>
+    <img src="assets/icon/ugm_logo.png" width="50" height="50"><br>
+    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Pembantu Penentuan Lokasi Ternak </i></p>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -75,24 +76,27 @@
                   <h4><i class="icon fa fa-ban"></i> Sign In failed!</h4>'.$msg.'</div>';
           }
     ?>
-    <p class="login-box-msg">Please sign in first!</p>
-
+    <div class="box-header with-border">
+      <h3 class="box-title">Silahkan Log in terlebih dahulu</h3>
+    </div>
     <form class="form-horizontal" method="post" action="">
+    <div class="box-body">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" id="email" placeholder="Enter your e-mail" name="email">
+        <input type="email" class="form-control" id="email" placeholder="Masukkan E-mail anda" name="email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password">
+        <input type="password" class="form-control" id="password" placeholder="Masukkan password anda" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-info btn-block btn-flat">Sign In</button>
+          <button type="submit" class="btn btn-info btn-block btn-flat">Log In</button>
         </div>
       </div>
+      </div>
     </form>
-    <a href="signup.php" class="text-center">Don't have an account? Register here.</a>
+    <a href="signup.php" class="text-center">Tidak memiliki akun? Silahkan daftar.</a>
 
   </div>
   <!-- /.login-box-body -->

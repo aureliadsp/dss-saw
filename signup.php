@@ -81,7 +81,10 @@
   ?>
   <!-- SIGN UP FORM -->
   <div class="register-box">
-    <div class="login100-form-title" style="background-image: url(images/bg-01.jpg);"></div> 
+    <div class="register-logo">
+    <img src="assets/icon/ugm_logo.png" width="50" height="50"><br>
+    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Pembantu Penentuan Lokasi Ternak </i></p>
+  </div>
     <div class="register-box-body">
         <?php 
           if ( isset($msg) && $status == 1 )
@@ -108,7 +111,7 @@
                 <label for="fullname" class="col-sm-3 control-label">Nama Lengkap</label>
 
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="fullname" placeholder="Please enter your full name" name="fullname" />
+                  <input type="text" class="form-control" id="fullname" placeholder="Masukkan nama lengkap anda" name="fullname" />
                 </div>
               </div> <!-- /Full name -->
 
@@ -132,7 +135,7 @@
                 <label for="password" class="col-sm-3 control-label">Password</label>
 
                 <div class="col-sm-9">
-                  <input type="password" class="form-control" id="password" placeholder="Please enter your password" name="password" />
+                  <input type="password" class="form-control" id="password" placeholder="Masukkan password anda" name="password" />
                 </div>
               </div> <!-- /Password -->
 

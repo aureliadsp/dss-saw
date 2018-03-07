@@ -96,7 +96,7 @@
         </section>
 
         <!-- Main content -->
-        <section class="content container-fluid">
+        <section class="content">
           <div class="row">
             <div class="box box-solid">
               <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -126,10 +126,11 @@
             </div>
           </div>
           <div class="row" style="width:100%">
+          <div class="box box-solid" style="height: 800px; padding:10px;">
             <div class="col-sm-8">
-            <div class="box box-solid" style="height: 800px">
+            <div class="box box-solid">
               <div class="box-header with-border">
-                <h4>Selamat datang di aplikasi SPK (DSS) sebagai pembantu penentuan lokasi ternak</h4>
+                <h5><b>Selamat datang di aplikasi SPK (DSS) sebagai pembantu penentuan lokasi ternak</b></h5>
               </div>
               <div class="box-body">
                 <p align="justify">
@@ -137,15 +138,15 @@
                 Aplikasi ini dikembangkan dalam rangka meningkatkan kualitas pembelajaran Ilmu Lingkungan Ternak. Sistem pendukung keputusan merupakan sistem berbasis komputer yang dikembangkan untuk membantu pengguna untuk menggunakan data dan model dalam memecahkan masalah-masalah yang tidak terstruktur.<br><br>
                 Sistem pendukung keputusan dapat memberikan alternatif solusi bagi penguna sehingga pengambilan keputusan dapat dilakukan dengan cepat dan tepat. Dengan dukungan tambahan media interaktif diharapkan mahasiswa dapat melakukan analisis kesesuaian lingkungan pada potensi ternak secara mandiri sehingga proses belajar berikutnya melalui diskusi dapat berjalan dengan lebih interaktif.
                 <br><br>
-                Untuk memahami lebih lanjut soal aplikasi ini, silahkan membaca Tentang SPK di tab sebelah :
+                Sebelum memulai menggunakan aplikasi, di sarankan untuk mempelajari apakah SPK dan bagaimana cara kerjanya di aplikasi ini.
               </p>
               </div>
             </div>
           </div>
           <div class="col-sm-4">
-            <div class="box box-solid" style="height: 800px">
+            <div class="box box-solid">
               <div class="box-header with-border">
-                <center><h4>Tentang SPK</h4></center>
+                <h5><b>Tentang SPK</b></h5>
 
               </div>
               <div class="box-body">

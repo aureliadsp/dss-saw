@@ -3240,7 +3240,7 @@ table.text-center th {
   font-weight: 300;
   color: #fff;
   background: #77200D;
-  border-top-right-radius:10px;
+  border-top-right-radius:20px;
 }
 .login-logo a,
 .register-logo a {
@@ -3272,7 +3272,7 @@ table.text-center th {
   padding: 20px;
   border-top: 0;
   color: #666;
-  border-bottom-left-radius:10px;
+  border-bottom-left-radius:20px;
 }
 .login-box-body .form-control-feedback,
 .register-box-body .form-control-feedback {

@@ -144,10 +144,11 @@
                   <h6>(*mohon masukkan bobot masing-masing kriteria dengan nilai antara 1 - 10 agar mempermudah proses perhitungan.)</h6>
                   <br>
                   <div class="box-body" style="width:800px">
-                  <table id="choosecrit" class="table table-bordered table-striped">
+                  <div class="table-responsive">
+                  <table id="choosecrit" class="table table-bordered table-striped table-hover">
                       <thead>
                       <tr>
-                        <th>ID Kriteria</th>
+                        <th style="width:20%">ID Kriteria</th>
                         <th>Nama Kriteria</th>
                         <th>Tipe Kriteria</th>
                         <th>Bobot Kriteria</th>
@@ -193,6 +194,7 @@
                       ?>
                       </tbody>
                     </table>
+                    </div>
                   </div>
                   <a class="btn btn-primary btnPrevious" > <span class="fa fa-arrow-left"></span> Previous</a>
                   <a class="btn btn-primary btnNext" > Next <span class="fa fa-arrow-right"></span></a>
@@ -230,7 +232,7 @@
                   <div class="box-body">
                   <style>
                     table { table-layout: fixed; }
-                    table th, table td { overflow: hidden; }
+                    table th, table td { overflow: auto; }
                   </style>
                   <table id="chooseloc" class="table table-bordered table-striped" style="width:1000px">
                     <thead>
@@ -304,7 +306,7 @@
       'searching'   : false,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : false
+      'autoWidth'   : true
     })
   })
 </script>

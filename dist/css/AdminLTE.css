@@ -3236,11 +3236,11 @@ table.text-center th {
   font-size: 23px;
   text-align: center;
   margin-bottom: 5px;
-  padding: 5px;
+  padding: 10px;
   font-weight: 300;
   color: #fff;
   background: #77200D;
-  border-radius:10px;
+  border-top-right-radius:10px;
 }
 .login-logo a,
 .register-logo a {
@@ -3272,6 +3272,7 @@ table.text-center th {
   padding: 20px;
   border-top: 0;
   color: #666;
+  border-bottom-left-radius:10px;
 }
 .login-box-body .form-control-feedback,
 .register-box-body .form-control-feedback {

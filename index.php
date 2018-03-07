@@ -124,7 +124,9 @@
                 </a>
               </div>
             </div>
-            <div class="col-md-8">
+          </div>
+          <div class="row" style="width:100%">
+            <div class="col-sm-8">
             <div class="box box-solid" style="height: 800px">
               <div class="box-header with-border">
                 <h4>Selamat datang di aplikasi SPK (DSS) sebagai pembantu penentuan lokasi ternak</h4>
@@ -140,18 +142,20 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-sm-4">
             <div class="box box-solid" style="height: 800px">
               <div class="box-header with-border">
                 <center><h4>Tentang SPK</h4></center>
 
               </div>
               <div class="box-body">
+              </div>
+            </div>
           </div>
         </div>
         </section>
+        </div>
       </div>
-    </div>
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->

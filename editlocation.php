@@ -119,25 +119,22 @@
           </div>
       </nav>
     </header>
+
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+  <div class="content-wrapper" style="height: 1000px">
+    <div class="container">
     <section class="content-header">
-      <h1>
-        Start SAW
-        <small>Optional description</small>
-      </h1>
+      <h1><small></small></h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Edit Lokasi</a></li>
+        <li class="active"> Edit Lokasi</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
       <div class="row">
-        <div class="col-xs-12">
-          <div class="box box-solid">
+          <div class="box box-solid" style="height: 800px">
             <div class="box-header with-border">
               <h4><b><i class="fa fa-circle-o-notch"></i> Edit data</b></h4>
             </div>
@@ -211,6 +208,7 @@
     </div>
   </div>
 </section>
+</div>
 </div>
   <!-- /.content-wrapper -->
 

@@ -13,12 +13,12 @@
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme -->
   <link rel="stylesheet" href="dist/css/AdminLTE.css">
-  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="dist/css/skins/skin-red.css">
     <!-- DataTables -->
   <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpp6B9kDPrk0cZRRM4HsKz4Phj79KwNAU&callback=mymap"
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpp6B9kDPrk0cZRRM4HsKz4Phj79KwNAU&callback=initmap"
   type="text/javascript"></script>
   <script type="text/javascript" src="assets/js/jquery.js"></script>
   <script type="text/javascript" src="assets/js/markerclusterer_packed.js"></script>
@@ -37,85 +37,67 @@
     });
 
 ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-red layout-top-nav">
 <div class="wrapper">
 
   <!-- Main Header -->
-  <header class="main-header"> 
+    <header class="main-header">
+      <div class="topheader"></div>
+        <nav class="navbar navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="index.php" class="navbar-brand"> <img src="assets/icon/ugm_logo.png" width="50" height="50"></a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+              <i class="fa fa-bars"></i>
+              </button>
+            </div>
+            <div class="navbar-header">
+              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Pembantu Penentuan Lokasi Ternak </i></a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+              <i class="fa fa-bars"></i>
+              </button>
+            </div>
 
-    <!-- Logo -->
-    <a href="index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
-    </a>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="sawstart.php"><i class="fa fa-balance-scale"></i> Mulai SAW</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database"></i> Data <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="animaldata.php"><i class="fa fa-paw"></i><span>Data Hewan</span></a></li>
+                    <li><a href="criteriadata.php"><i class="fa fa-list-ul"></i><span>Data Kriteria</span></a></li>
+                    <li><a href="locationdata.php"><i class="fa fa-location-arrow"></i><span>Data Lokasi</span></a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+              <ul class="nav navbar-nav">
+                <li class="dropdown user user-menu">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="dist/img/user-img.jpg" width="100px" height="100px" class="user-image" alt="User Image">
+                    <span class="hidden-xs"><?php echo $_SESSION['user_name']; ?></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="signout.php"><i class="fa fa-sign-out"></i><span> Sign out</span></a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+      </nav>
+    </header>
 
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu"> </div>
-      <h4><div align="right"> Livestock Mapping by using DSS - SAW </div></h4>
-      </div>
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Alexander Pierce</p>
-          <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li><a href="home.php"><i class="fa fa-link"></i> <span>Home</span></a></li>
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>DSS - SAW</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Data</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="animaldata.php">Animal Data</a></li>
-            <li><a href="criteriadata.php">Criteria Data</a></li>
-            <li><a href="locationdata.php">Location Data</a></li>
-          </ul>
-        </li>
-      </ul>
-      <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+  <div class="container">
     <section class="content-header">
       <h1>
-        Start SAW
-        <small>Optional description</small>
+        Hasil Perhitungan
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -127,142 +109,126 @@
               <h4><b><i class="fa fa-circle-o-notch"></i> Edit data</b></h4>
             </div>
           <!-- Custom Tabs -->
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <br>
-              <li class="active"><a href="#tab_1" data-toggle="tab"> <i class="fa fa-paw"></i> Edit data Lokasi </a></li>
-            </ul>
-            <form action="getscaledata.php" method="get">
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab_1">
-                  <script type="text/javascript">
-                    var peta;
-                    var js_locid = new Array();
-                    var js_locname = new Array();
-                    var js_locdis = new Array();
-                    var js_sumres = new Array();
-                    var js_status = new Array();
-                    var x        = new Array();
-                    var y        = new Array();
-                    var i;
-                    var url;
-                    var gambar_tanda;
+          <div class="box-body">
+          
+          <script type="text/javascript">
+            var peta;
+            var js_locid = new Array();
+            var js_locname = new Array();
+            var js_locdis = new Array();
+            var js_sumres = new Array();
+            var js_status = new Array();
+            var x        = new Array();
+            var y        = new Array();
+            var i;
+            var url;
+            var gambar_tanda;
 
-                    function mymap() {
-                        var yogyakarta = new google.maps.LatLng(-7.756370,110.382347);
+            function initmap() {
+              var yogyakarta = new google.maps.LatLng(-7.756370,110.382347);
 
-                        var myStyles =[
-                          {
-                              featureType: "poi",
-                              elementType: "labels",
-                              stylers: [
-                                    { visibility: "off" }
-                              ]
-                          }
-                        ];
+              var myStyles =[
+              {
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [
+                  { visibility: "off" }
+                ]
+              }
+              ];
 
-                        var petaoption = {
-                            zoom: 10,
-                            center: yogyakarta,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP,
-                            styles: myStyles 
-                            };
+              var petaoption = {
+                zoom: 11,
+                center: yogyakarta,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                styles: myStyles 
+              };
 
-                        peta = new google.maps.Map(document.getElementById("map_canvas"),petaoption);
-                        takedb();
+              peta = new google.maps.Map(document.getElementById("map_canvas"),petaoption);
+              takedb();
+            }
 
-                    }
-
-                    function takedb(){
-                        var markers = [];
-                        var info = [];
+            function takedb() {
+              var markers = [];
+              var info = [];
                         
-                        <?php
-                          $js = "";
-                          $imgicon = 'point.png';
+              <?php
+                $js = "";
+                $imgicon = 'point.png';
                           
-                          for ($i = 0; $i < count($loc_finaldata); $i++)
-                          {
-                            $js .= 'js_locid['.$i.'] = "'.$loc_finaldata[$i]['0'].'";
-                                    js_locname['.$i.'] = "'.$loc_finaldata[$i]['1'].'";
-                                    js_locdis['.$i.'] = "'.$loc_finaldata[$i]['2'].'";
-                                    js_sumres['.$i.'] = "'.$loc_finaldata[$i]['12'].'";
-                                    js_status['.$i.'] = "'.$loc_finaldata[$i]['6'].'";
-                                    y['.$i.'] = "'.$loc_finaldata[$i]['3'].'";
-                                    x['.$i.'] = "'.$loc_finaldata[$i]['4'].'";
-                                    set_icon("'.$imgicon.'");
+                for ($i = 0; $i < count($loc_finaldata); $i++)
+                {
+                  $js .= 'js_locid['.$i.'] = "'.$loc_finaldata[$i]['0'].'";
+                          js_locname['.$i.'] = "'.$loc_finaldata[$i]['1'].'";
+                          js_locdis['.$i.'] = "'.$loc_finaldata[$i]['2'].'";
+                          js_sumres['.$i.'] = "'.$loc_finaldata[$i]['12'].'";
+                          js_status['.$i.'] = "'.$loc_finaldata[$i]['5'].'";
+                          y['.$i.'] = "'.$loc_finaldata[$i]['3'].'";
+                          x['.$i.'] = "'.$loc_finaldata[$i]['4'].'";
+                          set_icon("'.$imgicon.'");
 
-                                    var point = new google.maps.LatLng(parseFloat(x['.$i.']),parseFloat(y['.$i.']));
+                          var point = new google.maps.LatLng(parseFloat(x['.$i.']),parseFloat(y['.$i.']));
 
-                                    var contentString = "<table>"+
-                                                          "<tr>"+
-                                                            "<td><b>" + js_locid['.$i.'] + "</b></td>"+
-                                                          "</tr>"+
-                                                          "<tr>"+
-                                                            "<td>" + js_locname['.$i.'] + ", " + js_locdis['.$i.'] + "</td>"+
-                                                          "</tr>"+
-                                                          "<tr>"+
-                                                            "<td>Status : <b>" + js_status['.$i.'] + "</b></td>"+
-                                                          "</tr>"+
-                                                          "<tr>"+
-                                                            "<td>Total : <b>" + js_sumres['.$i.'] + "</b></td>"+
-                                                          "</tr>"+
-                                                        "</table>";
+                          var contentString = "<table>"+
+                                                "<tr>"+
+                                                  "<td><b>" + js_locid['.$i.'] + "</b></td>"+
+                                                "</tr>"+
+                                                "<tr>"+
+                                                  "<td>" + js_locname['.$i.'] + ", " + js_locdis['.$i.'] + "</td>"+
+                                                "</tr>"+
+                                                "<tr>"+
+                                                  "<td>Status : <b>" + js_status['.$i.'] + "</b></td>"+
+                                                "</tr>"+
+                                                "<tr>"+
+                                                  "<td>Total : <b>" + js_sumres['.$i.'] + "</b></td>"+
+                                                "</tr>"+
+                                              "</table>";
 
+                          var infowindow = new google.maps.InfoWindow({
+                                            content: contentString });
 
-                                  var infowindow = new google.maps.InfoWindow({
-                                      content: contentString
+                          tanda = new google.maps.Marker({
+                                    position: point,
+                                    map: peta,
+                                    icon: gambar_tanda,
+                                    clickable: true
                                   });
                                   
+                          markers.push(tanda);
+                          info.push(infowindow);
 
-                                  tanda = new google.maps.Marker({
-                                          position: point,
-                                          map: peta,
-                                          icon: gambar_tanda,
-                                          clickable: true
-                                      });
-                                  
-                                  markers.push(tanda);
-                                  info.push(infowindow);
-
-                                  google.maps.event.addListener(markers['.$i.'], "click", function() { info['.$i.'].open(peta,markers['.$i.']); });';
-                          }
-                          // print js;
-                          echo $js;
-                        ?>
-                        // Cluster all markerer
-                        var markerCluster = new MarkerClusterer(peta, markers);  
-                    }
-                    function set_icon(icon){
-                        if (icon == "") {
-                        } else {
-                            gambar_tanda = "assets/icon/"+icon;
-                        }
-                    }
-                  </script>
-                     <div id="map_canvas" style="width:700px; height:500px;"></div>
+                          google.maps.event.addListener(markers['.$i.'], "click", function() { info['.$i.'].open(peta,markers['.$i.']); });';
+                }
+                echo $js;
+              ?>
+              // Cluster all markerer
+              var markerCluster = new MarkerClusterer(peta, markers);  
+              }
+              function set_icon(icon){
+                if (icon == "") {
+                } else {
+                  gambar_tanda = "assets/icon/"+icon;
+                }
+              }
+              </script>
+              <center>
+                <div id="map_canvas" style="width:1050px; height:700px;"></div>
+                </center>
                 </div>
               </div>
             </div>
           </div>
-          <div class="box-footer">
-        </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 </div>
-  <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
-      Anything you want
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>&copy; 2018 <a href="http://fapet.ugm.ac.id/">FAKULTAS PETERNAKAN UGM</a>.</strong>
   </footer>
 
   <!-- Control Sidebar -->

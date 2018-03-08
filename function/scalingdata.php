@@ -173,6 +173,9 @@
     $arr_chunkC1 = array_chunk($arr_C1merge, $c);
     
 	$_SESSION['C1_matrix'] = $arr_chunkC1;
+	$_SESSION['water_value'] = $water_value;
+	$_SESSION['fodder_value'] = $fodder_value;
+	$_SESSION['mob_value'] = $mob_value;
 	/*echo '<pre>'; echo 'water_value '; print_r($water_value); echo '</pre>';
     echo '<pre>'; echo 'fodder_value '; print_r($fodder_value); echo '</pre>';
     echo '<pre>'; echo 'mob_value '; print_r($mob_value); echo '</pre>';

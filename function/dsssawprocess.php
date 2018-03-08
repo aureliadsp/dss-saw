@@ -90,9 +90,9 @@
 		$FINALRESULT = call_user_func_array('array_map', $chunk_final);
 
 	$_SESSION['FINALRESULT'] = $FINALRESULT;
-	echo $cc1; echo $cc2;
+	/*echo $cc1; echo $cc2;
 	echo '<pre>'; echo 'dataget '; print_r($dataget); echo '</pre>';
 	echo '<pre>'; echo 'toSet_locID '; print_r($toSet_locID); echo '</pre>';
     echo '<pre>'; echo 'FINALRESULT '; print_r($FINALRESULT); echo '</pre>';
-    
+    */
 ?>

@@ -60,6 +60,7 @@
       {
         $finalcb[]= $rowloc;
         $m_locnewID[] = $rowloc['0'];
+        $_SESSION['m_locname'] = $rowloc['1'];
         $_SESSION['m_locnewID'] = $m_locnewID;
       }
     }

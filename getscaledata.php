@@ -19,6 +19,7 @@
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   </head>
 
   <?php
@@ -106,26 +107,95 @@
     <?php
       include ($_SERVER["DOCUMENT_ROOT"] . '/dss-saw/function/scalingdata.php');
       include ($_SERVER["DOCUMENT_ROOT"] . '/dss-saw/function/dsssawprocess.php');
+
+      function generate_value($input)
+      {
+        foreach ( $input as $key ) 
+        {
+          if ( $key == 4 ) {
+            $status = "Sangat baik";
+          }
+          else if ( $key == 3 ) {
+            $status = "Baik";    
+          } 
+          else if ( $key == 2 ) {
+            $status = "Sedang";
+          }
+          else if ( $key == 1 ) {
+            $status = "Buruk";
+          }
+          else {
+            $status = "Sangat buruk";
+          }
+          $set_status[] = $status;
+        }
+        return $set_status;
+      }
+
+      function transpose_data($input, $max)
+      {
+        $chunk = array_chunk($input, $max);
+
+        array_unshift($chunk, null);
+          $transposed = call_user_func_array('array_map', $chunk);
+
+        return $transposed;
+      }
+
+
+      $water_status = generate_value($_SESSION['water_value']);
+      $fodder_status = generate_value($_SESSION['fodder_value']);
+      $mob_status = generate_value($_SESSION['mob_value']);
+
+      $water_merge = array_merge($_SESSION['m_locnewID'], $_SESSION['m_locname'], $_SESSION['water_value'], $water_status);
+      $fodder_merge = array_merge($_SESSION['m_locnewID'], $_SESSION['m_locname'], $_SESSION['fodder_value'], $fodder_status);
+      $mob_merge = array_merge($_SESSION['m_locnewID'], $_SESSION['m_locname'], $_SESSION['mob_value'], $mob_status);
+      $alt_merge = array_merge($_SESSION['m_locnewID'], $_SESSION['m_locname'], $_SESSION['col_alt'], $_SESSION['new_alt']);
+      $hum_merge = array_merge($_SESSION['m_locnewID'], $_SESSION['m_locname'], $_SESSION['col_hum'], $_SESSION['new_hum']);
+      $tmp_merge = array_merge($_SESSION['m_locnewID'], $_SESSION['m_locname'], $_SESSION['col_temp'], $_SESSION['new_temp']);
+
+      $tb_water = transpose_data($water_merge, count($_SESSION['m_locnewID']));
+      $tb_fodder = transpose_data($fodder_merge, count($_SESSION['m_locnewID']));
+      $tb_mob = transpose_data($mob_merge, count($_SESSION['m_locnewID']));
+      $tb_alt = transpose_data($alt_merge, count($_SESSION['m_locnewID']));
+      $tb_hum = transpose_data($hum_merge, count($_SESSION['m_locnewID']));
+      $tb_tmp = transpose_data($tmp_merge, count($_SESSION['m_locnewID']));
+
+      $sqlcriteria = mysqli_query($connect_db, "SELECT cri_id, criteria_name, type_name FROM tb_criteria");
+      while($row = mysqli_fetch_row($sqlcriteria))
+      {
+        $criteria_id[] = $row['0'];
+        $criteria_name[] = $row['1'];
+        $criteria_type[] = $row['2'];
+      }
     ?>
 
   <div class="content-wrapper">
   <div class="container">
     <section class="content-header">
       <h1>
-        Hasil Scaling Data
+        Scaling Data
       </h1>
     </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
           <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <!-- Custom Tabs -->
+        <div class="box box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title"> Hasil scaling data kriteria</h3>
+          </div>
+          <div class="box-body">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_water" data-toggle="tab"> Keadaan Air</a></li>
               <li><a href="#tab_fodder" data-toggle="tab"> Keadaan Pakan</a></li>
               <li><a href="#tab_mob" data-toggle="tab"> Keadaan Akses</a></li>
+              <li><a href="#tab_alt" data-toggle="tab"> Ketinggian</a></li>
+              <li><a href="#tab_hum" data-toggle="tab"> Kelembapan</a></li>
+              <li><a href="#tab_tmp" data-toggle="tab"> Suhu Lokasi</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab_water">
@@ -138,49 +208,15 @@
                   </thead>
                   <tbody>
                       <?php
-                        function generate_value($input)
+                        foreach($tb_water as $water)
                         {
-                          foreach ( $input as $key ) 
+                          echo '<tr>';
+                          foreach ($water as $wtr) 
                           {
-                            if ( $key == 4 ) 
-                            {
-                              $status = "Sangat baik";
-                            }
-                            else if ( $key == 3 ) 
-                            {
-                              $status = "Baik";    
-                            } 
-                            else if ( $key == 2 )
-                            {
-                              $status = "Sedang";
-                            }
-                            else if ( $key == 1 )
-                            {
-                              $status = "Buruk";
-                            }
-                            else 
-                            {
-                              $status = "Sangat buruk";
-                            }
-                            $set_status[] = $status;
+                            echo '<td>' . $wtr . '</td>';
                           }
-                          return $set_status;
+                          echo '</tr>';
                         }
-
-
-                        $water_status[] = generate_value($_SESSION['water_value']);
-                        $fodder_value[] = generate_value($_SESSION['fodder_value']);
-                        $mob_value[] = generate_value($_SESSION['mob_value']);
-
-                        //$tb_water[] = array_merge(  $_SESSION['water_value']);
-                        $_SESSION['fodder_value'];
-                        $_SESSION['mob_value'];
-
-                        foreach($_SESSION['m_locnewID'] as $id)
-                        {
-                          echo '<tr><td>' . $id . '</td></tr>';
-                        }
-
                       ?>
                   </tbody>
                 </table>
@@ -189,119 +225,216 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_fodder">
-                The European languages are members of the same family. Their separate existence is a myth.
-                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                new common language would be desirable: one could refuse to pay expensive translators. To
-                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                words. If several languages coalesce, the grammar of the resulting language is more simple
-                and regular than that of the individual languages.
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <th> ID Lokasi </th>
+                    <th> Nama Lokasi </th>
+                    <th> Value Lokasi </th>
+                    <th> Status Lokasi </th>
+                  </thead>
+                  <tbody>
+                      <?php                        
+                        foreach($tb_fodder as $fodder)
+                        {
+                          echo '<tr>';
+                          foreach ($fodder as $fdr) 
+                          {
+                            echo '<td>' . $fdr . '</td>';
+                          }
+                          echo '</tr>';
+                        }
+                      ?>
+                  </tbody>
+                </table>
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_mob">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <th> ID Lokasi </th>
+                    <th> Nama Lokasi </th>
+                    <th> Value Lokasi </th>
+                    <th> Status Lokasi </th>
+                  </thead>
+                  <tbody>
+                      <?php                        
+                        foreach($tb_mob as $mobi)
+                        {
+                          echo '<tr>';
+                          foreach ($mobi as $mob) 
+                          {
+                            echo '<td>' . $mob . '</td>';
+                          }
+                          echo '</tr>';
+                        }
+                      ?>
+                  </tbody>
+                </table>
               </div>
               <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_alt">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <th> ID Lokasi </th>
+                    <th> Nama Lokasi </th>
+                    <th> Ketinggian </th>
+                    <th> Skala </th>
+                  </thead>
+                  <tbody>
+                      <?php                        
+                        foreach($tb_alt as $alti)
+                        {
+                          echo '<tr>';
+                          foreach ($alti as $alt) 
+                          {
+                            echo '<td>' . $alt . '</td>';
+                          }
+                          echo '</tr>';
+                        }
+                      ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_hum">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <th> ID Lokasi </th>
+                    <th> Nama Lokasi </th>
+                    <th> Kelembapan </th>
+                    <th> Skala </th>
+                  </thead>
+                  <tbody>
+                      <?php                        
+                        foreach($tb_hum as $humi)
+                        {
+                          echo '<tr>';
+                          foreach ($humi as $hum) 
+                          {
+                            echo '<td>' . $hum . '</td>';
+                          }
+                          echo '</tr>';
+                        }
+                      ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_tmp">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <th> ID Lokasi </th>
+                    <th> Nama Lokasi </th>
+                    <th> Suhu Lokasi </th>
+                    <th> Skala </th>
+                  </thead>
+                  <tbody>
+                      <?php                        
+                        foreach($tb_tmp as $temp)
+                        {
+                          echo '<tr>';
+                          foreach ($temp as $tmp) 
+                          {
+                            echo '<td>' . $tmp . '</td>';
+                          }
+                          echo '</tr>';
+                        }
+                      ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <!-- /.tab-content -->
           </div>
-          <!-- nav-tabs-custom -->
-        </div>
-        <!-- /.col -->
-
-        <div class="col-md-6">
-          <!-- Custom Tabs (Pulled to the right) -->
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs pull-right">
-              <li class="active"><a href="#tab_1-1" data-toggle="tab">Tab 1</a></li>
-              <li><a href="#tab_2-2" data-toggle="tab">Tab 2</a></li>
-              <li><a href="#tab_3-2" data-toggle="tab">Tab 3</a></li>
-              <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                  Dropdown <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                  <li role="presentation" class="divider"></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                </ul>
-              </li>
-              <li class="pull-left header"><i class="fa fa-th"></i> Custom Tabs</li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab_1-1">
-                <b>How to use:</b>
-
-                <p>Exactly like the original bootstrap tabs except you should use
-                  the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
-                A wonderful serenity has taken possession of my entire soul,
-                like these sweet mornings of spring which I enjoy with my whole heart.
-                I am alone, and feel the charm of existence in this spot,
-                which was created for the bliss of souls like mine. I am so happy,
-                my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
-                that I neglect my talents. I should be incapable of drawing a single stroke
-                at the present moment; and yet I feel that I never was a greater artist than now.
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_2-2">
-                The European languages are members of the same family. Their separate existence is a myth.
-                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                new common language would be desirable: one could refuse to pay expensive translators. To
-                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                words. If several languages coalesce, the grammar of the resulting language is more simple
-                and regular than that of the individual languages.
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_3-2">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
-              </div>
-              <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
+          </div>
           </div>
           <!-- nav-tabs-custom -->
         </div>
         <!-- /.col -->
       </div>
 
-    <h2 class="page-header">Hasil Scaling Data</h2>
-
       <div class="row">
         <div class="col-md-6">
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">Progress Bars Different Sizes</h3>
+        <div class="box box-solid">
+        <div class="box-body">
+          <!-- Custom Tabs (Pulled to the right) -->
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs pull-left">
+              <li class="active"><a href="#tab_1-1" data-toggle="tab"> Bobot Kriteria</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_1-1">
+              <?php
+                $merge_weight = array_merge($criteria_id, $criteria_name, $criteria_type, $_SESSION['m_rawweight'], $_SESSION['m_weightsess']);
+                $tb_weight = transpose_data($merge_weight, count($_SESSION['m_weightsess']));
+              ?>
+
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <th> ID Kriteria </th>
+                  <th> Nama Kriteria </th>
+                  <th> Jenis Kriteria </th>
+                  <th> Bobot Awal </th>
+                  <th> Bobot Setelah Normalisasi </th>
+                </thead>
+                <tbody>
+                <?php                        
+                  foreach($tb_weight as $weight)
+                  {
+                    echo '<tr>';
+                    foreach ($weight as $wgt) 
+                    {
+                      echo '<td>' . $wgt . '</td>';
+                    }
+                    echo '</tr>';
+                  }
+                ?>
+                </tbody>
+              </table>
+              </div>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-            </div>
-            <!-- /.box-body -->
+            <!-- /.tab-content -->
           </div>
-          <!-- /.box -->
+          </div>
+          </div>
+          <!-- nav-tabs-custom -->
         </div>
         <!-- /.col (left) -->
         <div class="col-md-6">
           <div class="box box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">Progress bars</h3>
+              <h3 class="box-title"> Proses perhitungan</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+            <br>
+
+            Hewan yang di pilih untuk uji ini adalah : <b> <?php echo $_SESSION['animal_name']; ?> </b>, dengan ketahanan suhu minimal <b><?php echo $_SESSION['lower_temp']; ?></b> dan batas suhu maksimal <b><?php echo $_SESSION['upper_temp']; ?></b>.
+            <br><br>
+            Data di atas merupakan hasil scaling dari data lokasi yang telah di input sebelumnya. Setiap kriteria memiliki ketentuan tersendiri dalam penentuan skalanya.<br><br>
+            <center>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#directing" id="startcount"> Mulai proses </button>
+            </center>
+            <!-- Modal -->
+            <div class="modal fade" id="directing" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title"> Sedang proses </h4>
+                  </div>
+                  <div class="modal-body">
+                    <br><br>
+                      <center> Mohon tunggu sebentar, sedang dalam proses perhitungan. 
+                    <br><br>
+                      <i class="fa fa-refresh fa-spin"></i>
+                      </center>
+                    <br><br>
+                  </div>
+                  <div class="modal-footer">
+                  </div>
+                </div>     
+              </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -309,51 +442,6 @@
         </div>
         <!-- /.col (right) -->
       </div>
-                  
-                    <br>
-  
-                    <center>
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#directing"> Mulai proses </button>
-                    </center>
-                    <!-- Modal -->
-                    
-                    <div class="modal fade" id="directing" role="dialog">
-                      <div class="modal-dialog">
-                      
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h4 class="modal-title"> Processing </h4>
-                          </div>
-                          <div class="modal-body">
-                            <br><br>
-                            <center> Mohon tunggu sebentar, sedang dalam proses perhitungan. 
-                            <br><br>
-                              <i class="fa fa-refresh fa-spin"></i>
-                              <?php
-                                if($trigger)
-                                {
-                                  echo "<span id=\"countdown\">3</span>";
-                                }
-                              ?>
-                            </center>
-                            <br><br>
-                          </div>
-                          <div class="modal-footer">
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-
-                  </center>
-                </div>
-              </div>
-          </div>
-          <div class="box-footer">
-        </div>
-        </div>
       </div>
     </div>
   </section>
@@ -374,30 +462,26 @@
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 <!-- DataTables -->
-<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
-<script src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
-<script src="../../bower_components/fastclick/lib/fastclick.js"></script>
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
 <script type="text/javascript">
-    var seconds = 10;
-    
-    function countdown() {
-        seconds = seconds - 1;
-        if (seconds < 0) {
-            // Chnage your redirection link here
-            window.location = "result.php";
-        } else {
-            // Update remaining seconds
-            document.getElementById("countdown").innerHTML = seconds;
-            // Count down using javascript
-            window.setTimeout("countdown()", 1000);
-        }
-    }
-    
-    // Run countdown function
-    countdown();
+$("#startcount").click( function(){
+   var counter = 5;
+   setInterval(function() {
+     counter--;
+      if (counter >= 0) {
+        //wait
+      }
+      if (counter === 0) {
+         clearInterval(counter);
+         window.location = "result.php";
+       }
+     }, 1000);
+});
     
 </script>
 </body>

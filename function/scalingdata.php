@@ -10,12 +10,15 @@
     $sess_chunkdata = $_SESSION['chunk_seldata'];
 
     //---------------------------------------------------------------------- selecting status & value process
+    $sql_getname = mysqli_query($connect_db, "SELECT animal_name FROM tb_animaldata WHERE animal_id ='$sess_animalID'");
+		$fetch_name = mysqli_fetch_array($sql_getname);
+		$_SESSION['animal_name'] = $get_name = $fetch_name['animal_name'];
     $sql_getlowtemp = mysqli_query($connect_db, "SELECT lower_temp FROM tb_animaldata WHERE animal_id ='$sess_animalID'");
 		$fetch_lowtemp = mysqli_fetch_array($sql_getlowtemp);
-		$get_lowtemp = $fetch_lowtemp['lower_temp'];
+		$_SESSION['lower_temp'] = $get_lowtemp = $fetch_lowtemp['lower_temp'];
 	$sql_getuptemp = mysqli_query($connect_db, "SELECT upper_temp FROM tb_animaldata WHERE animal_id ='$sess_animalID'");
 		$fetch_uptemp = mysqli_fetch_array($sql_getuptemp);
-		$get_uptemp = $fetch_uptemp['upper_temp'];
+		$_SESSION['upper_temp'] = $get_uptemp = $fetch_uptemp['upper_temp'];
 	
 	array_unshift($sess_chunkdata, null); //transpose sess_chunkdata norm
 	$arr_chunkdata = call_user_func_array('array_map', $sess_chunkdata);
@@ -26,15 +29,15 @@
 	{
 		if ( $tempvalue > $get_uptemp ) 
 		{
-			$set_status = "High";
+			$set_status = "Suhu terlalu tinggi";
 		}
 		elseif ( $get_lowtemp > $tempvalue ) 
 		{
-			$set_status = "Low";		
+			$set_status = "Suhu terlalu rendah";		
 		} 
 		else
 		{
-			$set_status = "OK";
+			$set_status = "Suhu cukup";
 		}
 		$tempstatus[] = $set_status;
 	}
@@ -66,6 +69,8 @@
 		}
 		$new_alt[] = $alt;
 	}
+	$_SESSION['col_alt'] = $arr_chunkdata['3'];
+	$_SESSION['new_alt'] = $new_alt;
 
 	foreach( $col_hum as $hum )						//humidity
 	{
@@ -82,6 +87,8 @@
 		}
 		$new_hum[] = $hum;
 	}
+	$_SESSION['col_hum'] = $col_hum;
+	$_SESSION['new_hum'] = $new_hum;
 
 	foreach ( $col_temp as $temp ) 				       //temperature
 	{
@@ -98,6 +105,9 @@
 		}
 		$new_temp[] = $temp;
 	}
+	$_SESSION['col_temp'] = $col_temp;
+	$_SESSION['new_temp'] = $new_temp;
+
 	//------------------------------------------end of get value of altitude, humidity, and temperature
 
 	//------------------------------------------find quartile $ median

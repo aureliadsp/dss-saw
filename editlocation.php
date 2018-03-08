@@ -19,6 +19,7 @@
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   </head>
 
   <?php
@@ -40,7 +41,7 @@
       {
         $m_weightfinal[] = number_format((($w / $m_totalweight) * 100),2);
       }
-
+      $_SESSION['m_rawweight'] = $m_criteriaweight; // raw weight
       $_SESSION['m_weightsess'] = $m_weightfinal; // save to session
       $_SESSION['m_locationsess'] = $m_location; // save location to session
 
@@ -60,7 +61,8 @@
       {
         $finalcb[]= $rowloc;
         $m_locnewID[] = $rowloc['0'];
-        $_SESSION['m_locname'] = $rowloc['1'];
+        $m_locname[] = $rowloc['1'];
+        $_SESSION['m_locname'] = $m_locname;
         $_SESSION['m_locnewID'] = $m_locnewID;
       }
     }

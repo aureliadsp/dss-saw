@@ -27,7 +27,12 @@
     mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
     if(empty($_SESSION)) // if the session not yet started 
-      session_start();
+     session_start();
+
+    if(!isset($_SESSION['email'])) { //if not yet logged in
+     header("Location: login.php");// send to login page
+     exit;
+    }
 
     if( isset( $_GET['selectanimal'] ) AND isset( $_GET['weight']) AND isset( $_GET['chk_loc']) )
     {

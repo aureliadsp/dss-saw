@@ -3,7 +3,13 @@
     mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
     if(empty($_SESSION)) // if the session not yet started 
-      session_start();
+     session_start();
+
+    if(!isset($_SESSION['email'])) { //if not yet logged in
+     header("Location: login.php");// send to login page
+     exit;
+ 	}
+
 	//-----------------------------------------------------------------------NORMALIZATION PROCESS
 	//select max
 	$C1matrix = $_SESSION['C1_matrix'];
@@ -44,7 +50,7 @@
 
 	for($i = 0; $i < $xaxis1; $i++) {
 		for($j = 0; $j < $yaxis1; $j++) {
-			$c1weight[] = $newc1norm[$j][$i] * $weight[$i];
+			$c1weight[] = round(($newc1norm[$j][$i] * $weight[$i]),3);
 		}
 	}
 

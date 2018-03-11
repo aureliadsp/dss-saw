@@ -107,7 +107,7 @@
                 </ol>
                 <div class="carousel-inner">
                   <div class="item active">
-                    <img src="http://placehold.it/900x500/39CCCC/ffffff&text=I+Love+Bootstrap" alt="First slide">
+                    <img src="assets/icon/Cover-1.png"" alt="First slide">
                   </div>
                   <div class="item">
                     <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide">
@@ -126,7 +126,6 @@
             </div>
           </div>
           <div class="row" style="width:100%">
-          <div class="box box-solid" style="height: 800px; padding:10px;">
             <div class="col-sm-8">
             <div class="box box-solid">
               <div class="box-header with-border">
@@ -150,6 +149,34 @@
 
               </div>
               <div class="box-body">
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="box box-solid">
+              <div class="box-body">
+                <div class="nav-tabs-custom">
+                  <ul class="nav nav-tabs pull-left">
+                    <li class="active"><a href="#tab_1-1" data-toggle="tab"> Sistem Pendukung Keputusan</a></li>
+                    <li><a href="#tab_1-2" data-toggle="tab"> Simple Additive Weighting</a></li>
+                    <li><a href="#tab_1-3" data-toggle="tab"> Flow Cara Kerja Sistem</a></li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1-1">
+                    <p align="justify">
+                    </p>
+                    </div>
+                    <div class="tab-pane" id="tab_1-2">
+                    <p align="justify">
+                    </p>
+                    </div>
+                    <div class="tab-pane" id="tab_1-3">
+                    <p align="justify">
+                    </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -4,26 +4,26 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Livestock Mapping using DSS-SAW | Home</title>
-  <!-- Tell the browser to be responsive to screen width -->
+  <title> Sistem Pendukung Keputusan (DSS-SAW) Penentuan Lokasi Pertenakan | Sign up</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-  <!-- Theme -->
   <link rel="stylesheet" href="dist/css/AdminLTE.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-  <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition register-page">
   <?php
     // ---------------------------------------------------------------------------------- START PHP 
-    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    //$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    //mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
+    // USE THIS WHEN LIVE
+    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
             
     if(isset($_POST['fullname']) && !empty($_POST['fullname']) AND 
         isset($_POST['studentid']) && !empty($_POST['studentid']) AND
@@ -38,12 +38,12 @@
             
       if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i", $email)) // check spam
       {
-        $msg = 'The email you have entered is invalid, please try again.';
+        $msg = 'E-mail yang anda masukkan tidak valid, mohon coba lagi.';
         $status = 0;
       }
       else
       {
-        $msg = 'Your account has been made, <br /> please verify it by clicking the activation link that has been send to your email.';
+        $msg = 'Akun anda telah di buat, <br /> Mohon verify akun anda dengan meng-click link verifikasi yang telah di kirim ke e-mail anda.';
         $status = 1;
         $hash = md5( rand(0,1000) ); // Generate random 32 character hash and assign it to a local variable.
         $uid = 'UID';
@@ -57,23 +57,26 @@
                     '". mysqli_escape_string($connect_db, md5($password)) ."', 
                     '". mysqli_escape_string($connect_db, $hash) ."') 
                     ") or die(mysqli_error());
+
           $to      = $email; // Send email to our user
-          $subject = 'Sign up verification - DSS-SAW new account'; // Give the email a subject 
-          $message = '
-                      Thanks for signing up on DSS-SAW Faculty of Animal Science UGM!
-                      Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+          $form    = "no-reply@dss.wg.ugm.ac.id";
+          $subject = "Verifikasi Akun Baru - DSS-SAW"; // Give the email a subject 
+          $message = "
+                      Terima kasih telah mendaftar di DSS-SAW Fakultas Pertenakan UGM!
+                      Akun anda telah di buat, anda bisa masuk dengan memasukkan e-mail dan password anda. Berikut data anda :
 
                       ------------------------
-                      Full name: '.$fullname.'
-                      E-mail : '.$email.'
+                      ID user : ".$userid."
+                      Nama Lengkap : ".$fullname."
+                      E-mail : ".$email."
                       ------------------------
                                  
-                      Please click this link to activate your account:
-                      http://localhost/loginsystem/verify.php?email='.$email.'&hash='.$hash.'
-                          
-                      '; // Our message above including the link
+                      Silahkan click link berikut untuk mengaktifkan akun anda :
+                      http://dss.wg.ugm.ac.id/verify.php?email=".$email."&hash=".$hash."
+                      
+                      "; // Our message above including the link
                      
-          $headers = 'From:noreply@dss.wg.ugm.ac.id' . "\r\n"; // Set header
+          $headers = "From:" . $from;
           mail($to, $subject, $message, $headers); // Send our email
       }
     }
@@ -83,7 +86,7 @@
   <div class="register-box">
     <div class="register-logo">
     <img src="assets/icon/ugm_logo.png" width="50" height="50"><br>
-    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Pembantu Penentuan Lokasi Ternak </i></p>
+    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Penentuan Lokasi Pertenakan </i></p>
   </div>
     <div class="register-box-body">
         <?php 
@@ -92,6 +95,8 @@
             echo '<div class="alert alert-success alert-dismissible">
                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                  <h4><i class="icon fa fa-check"></i> Sign Up success!</h4>'.$msg.'</div>';
+            echo $to;
+            echo $email;
           }
           else if (isset($msg) && $status == 0 )
           { // FAIL
@@ -127,7 +132,7 @@
                 <label for="email" class="col-sm-3 control-label">E-mail</label>
 
                 <div class="col-sm-9">
-                  <input type="email" class="form-control" id="email" placeholder="ex: youremail@ugm.ac.id" name="email" />
+                  <input type="email" class="form-control" id="email" placeholder="ex: emailanda@ugm.ac.id" name="email" />
                 </div>
               </div> <!-- /E-mail -->
 

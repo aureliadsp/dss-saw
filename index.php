@@ -1,3 +1,14 @@
+<?php
+if(empty($_SESSION))
+{
+  session_start();
+}
+if(!isset($_SESSION['email']))
+{
+  header("Location: login.php");// send to login page
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -19,16 +30,11 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
   <?php
-    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
-
-    if(empty($_SESSION)) // if the session not yet started 
-     session_start();
-
-    if(!isset($_SESSION['email'])) { //if not yet logged in
-     header("Location: login.php");// send to login page
-     exit;
-    }
+    //$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    //mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    // USE THIS WHEN LIVE
+    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
   ?>
   <body class="hold-transition skin-red layout-top-nav">
   <div class="wrapper">
@@ -165,14 +171,18 @@
                   <div class="tab-content">
                     <div class="tab-pane active" id="tab_1-1">
                     <p align="justify">
+
+                    HELLO
                     </p>
                     </div>
                     <div class="tab-pane" id="tab_1-2">
                     <p align="justify">
+                    Hai
                     </p>
                     </div>
                     <div class="tab-pane" id="tab_1-3">
                     <p align="justify">
+                    hehe
                     </p>
                     </div>
                   </div>

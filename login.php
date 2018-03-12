@@ -4,25 +4,24 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Livestock Mapping using DSS-SAW | Home</title>
-  <!-- Tell the browser to be responsive to screen width -->
+  <title> Sistem Pendukung Keputusan (DSS-SAW) Penentuan Lokasi Pertenakan | Sign in</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-  <!-- Theme -->
   <link rel="stylesheet" href="dist/css/AdminLTE.css">
   <link rel="stylesheet" href="dist/css/skins/skin-red.css">
-  <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
         <?php
-          $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-          mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+          //$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+          //mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
+          // USE THIS WHEN LIVE
+          $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+          mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
           if(isset($_POST['email']) && !empty($_POST['email']) AND isset($_POST['password']) && !empty($_POST['password']))
           {
@@ -42,12 +41,12 @@
                 $_SESSION['user_name'] = $row['full_name'];
               }
               $status = 1;
-              header('Location:index.php');
+              header('Location:maintenance.php');
             }
             else
             {
-              $status = 1;
-              $msg = 'Login Failed! Please make sure that you enter the correct details and that you have activated your account.';
+              $status = 0;
+              $msg = 'Sign in Gagal! Mohon cek kembali data yang anda masukkan benar dan akun anda telah di aktif.';
             }
           }    
         ?>
@@ -57,7 +56,7 @@
     
   <div class="login-logo">
     <img src="assets/icon/ugm_logo.png" width="50" height="50"><br>
-    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Pembantu Penentuan Lokasi Ternak </i></p>
+    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Penentuan Lokasi Pertenakan </i></p>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -66,14 +65,14 @@
           {  // SUCCESS
             echo '<div class="alert alert-success alert-dismissible">
                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                 <h4><i class="icon fa fa-check"></i> Sign In success!</h4>'.$msg.'</div>';
+                 <h4><i class="icon fa fa-check"></i> Sign In sukses!</h4>'.$msg.'</div>';
             $status = 0;
           }
           else if (isset($msg) && $status == 0 )
           { // FAIL
             echo '<div class="alert alert-danger alert-dismissible">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                  <h4><i class="icon fa fa-ban"></i> Sign In failed!</h4>'.$msg.'</div>';
+                  <h4><i class="icon fa fa-ban"></i> Sign In gagal!</h4>'.$msg.'</div>';
           }
     ?>
     <div class="box-header with-border">

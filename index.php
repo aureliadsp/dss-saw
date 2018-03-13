@@ -30,11 +30,13 @@ if(!isset($_SESSION['email']))
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
   <?php
-    //$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-    //mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    // USE THIS WHEN BETA
+    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
     // USE THIS WHEN LIVE
-    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    //$connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    //mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
   ?>
   <body class="hold-transition skin-red layout-top-nav">
   <div class="wrapper">
@@ -50,7 +52,7 @@ if(!isset($_SESSION['email']))
               </button>
             </div>
             <div class="navbar-header">
-              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Pembantu Penentuan Lokasi Ternak </i></a>
+              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Penentuan Lokasi Pertenakan </i></a>
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
               </button>
@@ -64,9 +66,9 @@ if(!isset($_SESSION['email']))
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database"></i> Data <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="animaldata.php"><i class="fa fa-paw"></i><span>Data Hewan</span></a></li>
-                    <li><a href="criteriadata.php"><i class="fa fa-list-ul"></i><span>Data Kriteria</span></a></li>
-                    <li><a href="locationdata.php"><i class="fa fa-location-arrow"></i><span>Data Lokasi</span></a></li>
+                    <li><a href="#"><i class="fa fa-paw"></i><span>Data Hewan</span></a></li>
+                    <li><a href="#"><i class="fa fa-list-ul"></i><span>Data Kriteria</span></a></li>
+                    <li><a href="#"><i class="fa fa-location-arrow"></i><span>Data Lokasi</span></a></li>
                   </ul>
                 </li>
               </ul>
@@ -131,7 +133,7 @@ if(!isset($_SESSION['email']))
               </div>
             </div>
           </div>
-          <div class="row" style="width:100%">
+          <div class="row">
             <div class="col-sm-8">
             <div class="box box-solid">
               <div class="box-header with-border">
@@ -161,33 +163,49 @@ if(!isset($_SESSION['email']))
         <div class="row">
           <div class="col-sm-8">
             <div class="box box-solid">
-              <div class="box-body">
-                <div class="nav-tabs-custom">
-                  <ul class="nav nav-tabs pull-left">
-                    <li class="active"><a href="#tab_1-1" data-toggle="tab"> Sistem Pendukung Keputusan</a></li>
-                    <li><a href="#tab_1-2" data-toggle="tab"> Simple Additive Weighting</a></li>
-                    <li><a href="#tab_1-3" data-toggle="tab"> Flow Cara Kerja Sistem</a></li>
-                  </ul>
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1-1">
-                    <p align="justify">
-
-                    HELLO
-                    </p>
-                    </div>
-                    <div class="tab-pane" id="tab_1-2">
-                    <p align="justify">
-                    Hai
-                    </p>
-                    </div>
-                    <div class="tab-pane" id="tab_1-3">
-                    <p align="justify">
-                    hehe
-                    </p>
-                    </div>
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <br>
+              <li class="active"><a href="#tab_1" data-toggle="tab"> <i class="fa fa-paw"></i> Tentang SPK </a></li>
+              <li><a href="#tab_2" data-toggle="tab"> <i class="fa fa-balance-scale"></i> Tentang SAW </a></li>
+              <li><a href="#tab_3" data-toggle="tab"> <i class="fa fa-location-arrow"></i> Flow Sistem  </a></li>
+            </ul>
+            <form action="editlocation.php" method="get">
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                  <div class="box-header with-border">
+                    <h5><b>Tentang Sistem Pendukung Keputusan.</b></h5>
                   </div>
+                <div class="box-body">
+                 <p align="justify">
+                  Sistem Pendukung Keputusan (SPK) atau biasa di sebut Decision Support System (DSS) adalah sebuah system yang di buat untuk memberikan solusi kepada suatu masalah. SPK bertujuan untuk memberikan informasi, membuat prediksi dan
+                  juga membuat mengarahkan agar dapat memilih pilihan yang lebih baik. <br>
+                  Dengan menggunakan SPK, solusi yang di dapat bisa di dapatkan lebih cepat dan lebih terpercaya, terutama dalam 
+                  menyelesaikan suatu masalah yang sangat kompleks dan tidak terstruktur. <br><br>
+
+                  SPK ini memiliki 5 karakteristik utama : <br>
+                  1. SPK merupakan sistem berbasis komputer <br>
+                  2. SPK di buat untuk membantu dalam menyelesaikan masalah dan mendapatkan suatu keputusan. <br>
+                  3. SPK bisa menyelesaikan permasalahan yang kompleks. <br>
+                  4. SPK menggunakan metode simulasi yang interaktif <br>
+                  5. Komponen utama dari SPK adalah data dan model analisis. <br><br>
+
+                  Ada beberapa metode yang bisa di gunakan dalam SPK, pada sistem ini metode yang digunakan adalah metode 
+                  Simple Additive Weighting (SAW) yang merupakan salah satu metode SPK yang mudah di gunakan.
+                 </p>
+               </div>
+                </div>
+
+                <div class="tab-pane" id="tab_2">
+
+                </div>
+
+                <div class="tab-pane" id="tab_3">
+
                 </div>
               </div>
+            </form>
+          </div>
             </div>
           </div>
         </div>

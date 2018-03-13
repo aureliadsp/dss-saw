@@ -44,7 +44,7 @@ if(!isset($_SESSION['email']))
 
       usort($loc_finaldata, function($a, $b) 
       {
-        return $b['12'] <=> $a['12'];
+        return $a['12'] <= $b['12'];
       });
     }
     else

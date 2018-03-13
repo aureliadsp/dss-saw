@@ -53,6 +53,10 @@ if(!isset($_SESSION['email']))
         $get_editdata[] =$_GET['inputloc'][$i];
       }
     }
+    else
+    {
+      header("Location: sawstart.php");
+    }
     //---------------------------------------------------------------------- Chunk array based on criteria
     $chunk_data = array_chunk($get_editdata, $get_maxcriteria);
     $_SESSION['chunk_seldata'] = $chunk_data;
@@ -72,7 +76,7 @@ if(!isset($_SESSION['email']))
               </button>
             </div>
             <div class="navbar-header">
-              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Pembantu Penentuan Lokasi Ternak </i></a>
+              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Penentuan Lokasi Peternakan </i></a>
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
               </button>
@@ -192,7 +196,7 @@ if(!isset($_SESSION['email']))
           <!-- Custom Tabs -->
         <div class="box box-solid">
           <div class="box-header with-border">
-            <h3 class="box-title"> Hasil scaling data kriteria</h3>
+            <h3 class="box-title"><li class="fa fa-check"></li> Hasil scaling data kriteria</h3>
           </div>
           <div class="box-body">
           <div class="nav-tabs-custom">
@@ -375,7 +379,6 @@ if(!isset($_SESSION['email']))
                 $merge_weight = array_merge($criteria_id, $criteria_name, $criteria_type, $_SESSION['m_rawweight'], $_SESSION['m_weightsess']);
                 $tb_weight = transpose_data($merge_weight, count($_SESSION['m_weightsess']));
               ?>
-
               <table class="table table-bordered table-striped">
                 <thead>
                   <th> ID Kriteria </th>

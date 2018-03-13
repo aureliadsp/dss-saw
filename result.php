@@ -38,14 +38,19 @@ if(!isset($_SESSION['email']))
     $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
     mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
-    if(empty($_SESSION)) // if the session not yet started 
-      session_start();
+    if(isset($_SESSION['FINALRESULT']))
+    {
+      $loc_finaldata = $_SESSION['FINALRESULT'];
 
-    $loc_finaldata = $_SESSION['FINALRESULT'];
-
-    usort($loc_finaldata, function($a, $b) {
-      return $b['12'] <=> $a['12'];
-    });
+      usort($loc_finaldata, function($a, $b) 
+      {
+        return $b['12'] <=> $a['12'];
+      });
+    }
+    else
+    {
+      header("Location: sawstart.php");
+    }
 
 ?>
 <body class="hold-transition skin-red layout-top-nav">
@@ -117,7 +122,7 @@ if(!isset($_SESSION['email']))
         <div class="col-md-12">
           <div class="box box-solid">
             <div class="box-header with-border">
-              <h4><b><i class="fa fa-circle-o-notch"></i> Edit data</b></h4>
+              <h4><b><i class="fa fa-map-o"></i> Penyajian Data Dengan Map</b></h4>
             </div>
           <!-- Custom Tabs -->
           <div class="box-body">
@@ -233,9 +238,12 @@ if(!isset($_SESSION['email']))
             <div class="col-md-12">
               <div class="box box-solid">
                 <div class="box-header with-border">
-                  <h4><b><i class="fa fa-circle-o-notch"></i> E dit data</b></h4>
+                  <h4><b><i class="fa fa-list-ul"></i> Tabel Hasil Perhitungan</b></h4>
                 </div>
                 <div class="box-body">
+                <p align="justify">
+                Dari tabel di bawah berikut, lokasi yang berada di urutan paling atas adalah lokasi yang memiliki potensi paling baik. Hasil dari perhitungan SAW adalah <b>TOTAL</b> dari hasil penambahan hasil pembobotan setiap kriteria : <br>
+                </p>
                   <div class="table">
                   <table class="table table-bordered table-striped">
                     <thead>
@@ -272,6 +280,8 @@ if(!isset($_SESSION['email']))
                     </tbody>
                   </table>
                 </div>
+                <br>
+                <center><a href="index.php" class="btn btn-info" onclick="return ClearResult()"> Selesai </a></center>
                 </div>
               </div>
             </div>
@@ -297,5 +307,12 @@ if(!isset($_SESSION['email']))
 <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
+<script type="text/javascript">
+  function ClearResult()
+  {
+    unset($_SESSION['FINALRESULT']);
+    return true;
+  }
+</script>
 </body>
 </html>

@@ -145,7 +145,7 @@ if(!isset($_SESSION['email']))
       <div class="row">
           <div class="box box-solid" style="height: 800px">
             <div class="box-header with-border">
-              <h4><b><i class="fa fa-circle-o-notch"></i> Edit data</b></h4>
+              <h4><b><i class="fa fa-edit"></i> Edit data</b></h4>
             </div>
           <div class="box box-body">
           <div class="nav-tabs-custom">

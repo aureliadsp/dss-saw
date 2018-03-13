@@ -35,11 +35,11 @@ if(!isset($_SESSION['email']))
 	{
 		if ( $tempvalue > $get_uptemp ) 
 		{
-			$set_status = "Suhu terlalu tinggi";
+			$set_status = "Suhu tinggi";
 		}
 		elseif ( $get_lowtemp > $tempvalue ) 
 		{
-			$set_status = "Suhu terlalu rendah";		
+			$set_status = "Suhu rendah";		
 		} 
 		else
 		{

@@ -115,13 +115,13 @@ if(!isset($_SESSION['email']))
                 </ol>
                 <div class="carousel-inner">
                   <div class="item active">
-                    <img src="assets/icon/Cover-1.png"" alt="First slide">
+                    <img src="assets/icon/Cover-1.png" alt="First slide">
                   </div>
                   <div class="item">
-                    <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide">
+                    <img src="assets/icon/Cover-2.jpg" style="max-height: 500px" alt="Second slide">
                     </div>
                   <div class="item">
-                    <img src="http://placehold.it/900x500/f39c12/ffffff&text=I+Love+Bootstrap" alt="Third slide">
+                    <img src="assets/icon/Cover-3.jpg" style="max-height: 500px" alt="Third slide">
                   </div>
                 </div>
                 <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">

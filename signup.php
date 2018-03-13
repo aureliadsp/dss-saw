@@ -30,54 +30,66 @@
         isset($_POST['email']) && !empty($_POST['email']) AND
         isset($_POST['password']) && !empty($_POST['password']))
     {
-      // Get from post form
-      $fullname = mysqli_escape_string($connect_db, $_POST['fullname']);
-      $studentid = mysqli_escape_string($connect_db, $_POST['studentid']);
-      $email = mysqli_escape_string($connect_db, $_POST['email']);
-      $password = mysqli_escape_string($connect_db, $_POST['password']);
-            
-      if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i", $email)) // check spam
+      $check_query = mysqli_query($connect_db, "SELECT * FROM tb_userdata WHERE email='".$_POST['email']."'");
+      if(mysqli_num_rows($check_query) > 0)
       {
-        $msg = 'E-mail yang anda masukkan tidak valid, mohon coba lagi.';
+        $msg = 'E-mail yang anda masukkan telah terdaftar.';
         $status = 0;
       }
       else
       {
-        $msg = 'Akun anda telah di buat, <br /> Mohon verify akun anda dengan meng-click link verifikasi yang telah di kirim ke e-mail anda.';
-        $status = 1;
-        $hash = md5( rand(0,1000) ); // Generate random 32 character hash and assign it to a local variable.
-        $uid = 'UID';
-        $userid = $uid . strval(rand(1000,9000));
+        // Get from post form
+        $fullname = mysqli_escape_string($connect_db, $_POST['fullname']);
+        $studentid = mysqli_escape_string($connect_db, $_POST['studentid']);
+        $email = mysqli_escape_string($connect_db, $_POST['email']);
+        $password = mysqli_escape_string($connect_db, $_POST['password']);
+              
+        if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i", $email)) // check spam
+        {
+          $msg = 'E-mail yang anda masukkan tidak valid, mohon coba lagi.';
+          $status = 0;
+        }
+        else
+        {
+          $msg = 'Akun anda telah di buat. Mohon coba masuk';
+          $status = 1;
+          $hash = md5( rand(0,1000) ); // Generate random 32 character hash and assign it to a local variable.
+          $uid = 'UID';
+          $userid = $uid . strval(rand(1000,9000));
+          $active = 1;
 
-        mysqli_query($connect_db, "INSERT INTO tb_userdata (user_id, full_name, student_id, email, password, hash) VALUES(
-                    '". mysqli_escape_string($connect_db, $userid) ."',
-                    '". mysqli_escape_string($connect_db, $fullname) ."',
-                    '". mysqli_escape_string($connect_db, $studentid) ."',
-                    '". mysqli_escape_string($connect_db, $email) ."',
-                    '". mysqli_escape_string($connect_db, md5($password)) ."', 
-                    '". mysqli_escape_string($connect_db, $hash) ."') 
-                    ") or die(mysqli_error());
+          mysqli_query($connect_db, "INSERT INTO tb_userdata (user_id, full_name, student_id, email, password, hash, active) VALUES(
+                      '". mysqli_escape_string($connect_db, $userid) ."',
+                      '". mysqli_escape_string($connect_db, $fullname) ."',
+                      '". mysqli_escape_string($connect_db, $studentid) ."',
+                      '". mysqli_escape_string($connect_db, $email) ."',
+                      '". mysqli_escape_string($connect_db, md5($password)) ."', 
+                      '". mysqli_escape_string($connect_db, $hash) ."',
+                      '". $active ."') 
+                      ") or die(mysqli_error());
 
-          $to      = $email; // Send email to our user
-          $form    = "no-reply@dss.wg.ugm.ac.id";
-          $subject = "Verifikasi Akun Baru - DSS-SAW"; // Give the email a subject 
-          $message = "
-                      Terima kasih telah mendaftar di DSS-SAW Fakultas Pertenakan UGM!
-                      Akun anda telah di buat, anda bisa masuk dengan memasukkan e-mail dan password anda. Berikut data anda :
+            // TO DO IMPLEMENT EMAIL VERIFICATION
+            /*$to      = $email; // Send email to our user
+            $form    = "no-reply@dss.wg.ugm.ac.id";
+            $subject = "Verifikasi Akun Baru - DSS-SAW"; // Give the email a subject 
+            $message = "
+                        Terima kasih telah mendaftar di DSS-SAW Fakultas Pertenakan UGM!
+                        Akun anda telah di buat, anda bisa masuk dengan memasukkan e-mail dan password anda. Berikut data anda :
 
-                      ------------------------
-                      ID user : ".$userid."
-                      Nama Lengkap : ".$fullname."
-                      E-mail : ".$email."
-                      ------------------------
-                                 
-                      Silahkan click link berikut untuk mengaktifkan akun anda :
-                      http://dss.wg.ugm.ac.id/verify.php?email=".$email."&hash=".$hash."
-                      
-                      "; // Our message above including the link
-                     
-          $headers = "From:" . $from;
-          mail($to, $subject, $message, $headers); // Send our email
+                        ------------------------
+                        ID user : ".$userid."
+                        Nama Lengkap : ".$fullname."
+                        E-mail : ".$email."
+                        ------------------------
+                                   
+                        Silahkan click link berikut untuk mengaktifkan akun anda :
+                        http://dss.wg.ugm.ac.id/verify.php?email=".$email."&hash=".$hash."
+                        
+                        "; // Our message above including the link
+                       
+            $headers = "From:" . $from;
+            mail($to, $subject, $message, $headers); // Send our email*/
+        }
       }
     }
   // ------------------------------------------------------------------------------------ STOP PHP  
@@ -95,8 +107,8 @@
             echo '<div class="alert alert-success alert-dismissible">
                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                  <h4><i class="icon fa fa-check"></i> Sign Up success!</h4>'.$msg.'</div>';
-            echo $to;
-            echo $email;
+            //echo $to;
+            //echo $email;
           }
           else if (isset($msg) && $status == 0 )
           { // FAIL
@@ -165,7 +177,7 @@
 <!-- FastClick -->
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <script type="text/javascript">
-$("#signup").validate({
+/*$("#signup").validate({
   submitHandler: function(form) {
     form.submit();
   },
@@ -190,7 +202,7 @@ $("#signup").validate({
     'email': 'E-mail mohon di isi.',
     'password': 'Password mohon di isi.',
     }
-  });
+  });*/
 </script>    
   </body>
 </html>

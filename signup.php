@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> Sistem Pendukung Keputusan (DSS-SAW) Penentuan Lokasi Pertenakan | Sign up</title>
+  <title> Sistem Pendukung Keputusan (DSS-SAW) Penentuan Lokasi Peternakan | Sign up</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
@@ -86,7 +86,7 @@
   <div class="register-box">
     <div class="register-logo">
     <img src="assets/icon/ugm_logo.png" width="50" height="50"><br>
-    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Penentuan Lokasi Pertenakan </i></p>
+    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Penentuan Lokasi Peternakan </i></p>
   </div>
     <div class="register-box-body">
         <?php 
@@ -109,7 +109,7 @@
             <h3 class="box-title">Sign Up</h3>
           </div>
           <!-- form start -->
-          <form class="form-horizontal" method="post" action="">
+          <form name="signup" id="signup" class="form-horizontal" method="post" action="">
             <div class="box-body">
 
               <div class="form-group"> <!-- Full name -->
@@ -150,6 +150,47 @@
             </div>
           </form>
       </div>
-    </div>    
+    </div>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="assets/js/jquery.validate.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<script type="text/javascript">
+$("#signup").validate({
+  submitHandler: function(form) {
+    form.submit();
+  },
+  ignore: [],
+  rules: {
+    'fullname': {
+      required: true
+    },
+    'studentid': {
+      required: true
+    },
+    'email': {
+      required: true
+    },
+    'password': {
+      required: true
+    },
+  },
+  messages: {
+    'fullname': 'Nama lengkap mohon di isi.',
+    'studentid': 'NIM mohon di isi.',
+    'email': 'E-mail mohon di isi.',
+    'password': 'Password mohon di isi.',
+    }
+  });
+</script>    
   </body>
 </html>

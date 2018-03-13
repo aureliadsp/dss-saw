@@ -1,15 +1,16 @@
 <?php
+if(empty($_SESSION))
+{
+  session_start();
+}
+if(!isset($_SESSION['email']))
+{
+  header("Location: login.php");
+  exit;
+}
 
-	$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
-
-    if(empty($_SESSION)) // if the session not yet started 
-     session_start();
-
-    if(!isset($_SESSION['email'])) { //if not yet logged in
-     header("Location: login.php");// send to login page
-     exit;
- 	}
+    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
     $sess_animalID = $_SESSION['m_animalIDsess'];
     $sess_chunkdata = $_SESSION['chunk_seldata'];

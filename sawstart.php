@@ -1,9 +1,20 @@
+<?php
+if(empty($_SESSION))
+{
+  session_start();
+}
+if(!isset($_SESSION['email']))
+{
+  header("Location: login.php");
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Livestock Mapping using DSS-SAW | Home</title>
+    <title>Sistem Pendukung Keputusan (DSS-SAW) Penentuan Lokasi Peternakan | Mulai SAW </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -22,11 +33,8 @@
   </head>
 
   <?php
-    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
-
-    if(empty($_SESSION)) // if the session not yet started 
-      session_start();
+    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
     $sqlanimal = mysqli_query($connect_db, "SELECT animal_id, animal_name FROM tb_animaldata");
     $sqlcriteria = mysqli_query($connect_db, "SELECT cri_id, criteria_name, type_name FROM tb_criteria");
@@ -47,7 +55,7 @@
               </button>
             </div>
             <div class="navbar-header">
-              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Pembantu Penentuan Lokasi Ternak </i></a>
+              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Penentuan Lokasi Peternakan </i></a>
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
               </button>
@@ -56,8 +64,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a></li>
-                <li><a href="sawstart.php"><i class="fa fa-balance-scale"></i> Mulai SAW</a></li>
+                <li><a href="index.php"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="#"><i class="fa fa-balance-scale"></i> Mulai SAW</a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database"></i> Data <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -91,7 +99,7 @@
   <div class="content-wrapper" style="height: 1000px">
     <div class="container">
     <section class="content-header">
-      <h1><small></small></h1>
+      <h1><small>Input Data</small></h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Input Data</li>
@@ -113,7 +121,7 @@
               <li><a href="#tab_2" data-toggle="tab"> <i class="fa fa-balance-scale"></i> Edit bobot kriteria </a></li>
               <li><a href="#tab_3" data-toggle="tab"> <i class="fa fa-location-arrow"></i> Pilih lokasi </a></li>
             </ul>
-            <form action="editlocation.php" method="get">
+            <form name="inputdata" action="editlocation.php" method="get">
               <div class="tab-content" style="height: 800px">
                 <div class="tab-pane active" id="tab_1">
                   <center>
@@ -145,6 +153,19 @@
                   <br>
                   <div class="box-body" style="width:800px">
                   <div class="table-responsive">
+                  <!--<script type="text/javascript">
+                    function checkweight(form)
+                    {
+                      if(form.<?php print_r($row1[$c]) ?>.value < 1 
+                        || form.<?php print_r($row1[$c]) ?>.value > 10) 
+                      {
+                        alert("Error: Mohon masukkan bobot antara 1 - 10!");
+                        form.<?php print_r($row1[$c]) ?>.focus();
+                        return false;
+                      }
+                    return true;
+                    }
+                  </script>-->
                   <table id="choosecrit" class="table table-bordered table-striped table-hover">
                       <thead>
                       <tr>
@@ -169,17 +190,12 @@
                             {
                               ?>
                               <script type="text/javascript">
-                                function checkForm(form)
+                                function checkweight(form)
                                 {
-                                  if(form.<?php print_r($rowcrit[$c]) ?>.value < 1) 
+                                  if(form.<?php print_r($rowcrit[$c]) ?>.value < 1
+                                    || form.<?php print_r($rowcrit[$c]) ?>.value > 10) 
                                   {
-                                    alert("Error: Enter weight between 1 - 10!");
-                                    form.<?php print_r($rowcrit[$c]) ?>.focus();
-                                    return false;
-                                  }
-                                  if(form.<?php print_r($rowcrit[$c]) ?>.value > 10) 
-                                  {
-                                    alert("Error: Enter weight between 1 - 10!");
+                                    alert("Error: Mohon masukkan bobot antara 1 - 10!");
                                     form.<?php print_r($rowcrit[$c]) ?>.focus();
                                     return false;
                                   }
@@ -197,7 +213,7 @@
                     </div>
                   </div>
                   <a class="btn btn-primary btnPrevious" > <span class="fa fa-arrow-left"></span> Previous</a>
-                  <a class="btn btn-primary btnNext" > Next <span class="fa fa-arrow-right"></span></a>
+                  <a class="btn btn-primary btnNext" onclick="return checkweight(inputdata)" > Next <span class="fa fa-arrow-right"></span></a>
                   </div>
                 </div>
 
@@ -220,7 +236,7 @@
                       {
                         var itemsChecked = checkArray(form, "chk_loc[]");
                         if(itemsChecked.length < 5) {
-                          alert("Please choose at least 5 location!");
+                          alert("Error: Mohon pilih lokasi minimal 5!");
                           return false;
                         }
                         return true;
@@ -258,7 +274,7 @@
                     </tbody>
                     </table>
                     <a class="btn btn-primary btnPrevious" ><span class="fa fa-arrow-left"></span> Previous</a>
-                    <button type="Submit" name="input_data" class="btn btn-primary"><span class="fa fa-edit"></span>  Edit lokasi </button>
+                    <button type="Submit" name="input_data" onclick="return checkForm(inputdata)" class="btn btn-primary"><span class="fa fa-edit"></span>  Edit lokasi </button>
 
                   </center>
                   </div>

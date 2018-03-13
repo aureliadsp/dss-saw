@@ -5,7 +5,7 @@ if(empty($_SESSION))
 }
 if(!isset($_SESSION['email']))
 {
-  header("Location: login.php");// send to login page
+  header("Location: login.php");
   exit;
 }
 ?>
@@ -14,7 +14,7 @@ if(!isset($_SESSION['email']))
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Livestock Mapping using DSS-SAW | Home</title>
+    <title> Sistem Pendukung Keputusan (DSS-SAW) Penentuan Lokasi Peternakan | Home</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -31,12 +31,12 @@ if(!isset($_SESSION['email']))
   </head>
   <?php
     // USE THIS WHEN BETA
-    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    //$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    //mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
     // USE THIS WHEN LIVE
-    //$connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
-    //mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
   ?>
   <body class="hold-transition skin-red layout-top-nav">
   <div class="wrapper">
@@ -52,7 +52,7 @@ if(!isset($_SESSION['email']))
               </button>
             </div>
             <div class="navbar-header">
-              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Penentuan Lokasi Pertenakan </i></a>
+              <a href="index.php" class="navbar-brand"> <i><b>Sistem Pendukung Keputusan</b> <br> Penentuan Lokasi Peternakan </i></a>
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
               </button>
@@ -153,10 +153,15 @@ if(!isset($_SESSION['email']))
           <div class="col-sm-4">
             <div class="box box-solid">
               <div class="box-header with-border">
-                <h5><b>Tentang SPK</b></h5>
-
+                <h5><b> Materi </b></h5>
               </div>
               <div class="box-body">
+              <p align="justify">
+              Materi apa saja yang perlu di pahami saat menggunakan sistem ini antara lain : <br>
+              - Sistem Pendukung Keputusan secara umum.<br>
+              - Metode Simple Additive Weighting (SAW) secara umum. <br>
+              - Flow dari sistem ini sendiri secara umum. <br><br>
+              </p>
               </div>
             </div>
         </div>
@@ -166,7 +171,7 @@ if(!isset($_SESSION['email']))
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <br>
-              <li class="active"><a href="#tab_1" data-toggle="tab"> <i class="fa fa-paw"></i> Tentang SPK </a></li>
+              <li class="active"><a href="#tab_1" data-toggle="tab"> <i class="fa fa-random"></i> Tentang SPK </a></li>
               <li><a href="#tab_2" data-toggle="tab"> <i class="fa fa-balance-scale"></i> Tentang SAW </a></li>
               <li><a href="#tab_3" data-toggle="tab"> <i class="fa fa-location-arrow"></i> Flow Sistem  </a></li>
             </ul>
@@ -178,7 +183,10 @@ if(!isset($_SESSION['email']))
                   </div>
                 <div class="box-body">
                  <p align="justify">
-                  Sistem Pendukung Keputusan (SPK) atau biasa di sebut Decision Support System (DSS) adalah sebuah system yang di buat untuk memberikan solusi kepada suatu masalah. SPK bertujuan untuk memberikan informasi, membuat prediksi dan
+                  <br><center>
+                  <img src="assets/dss-ilustration.png">
+                  </center><br><br>
+                  <b>Sistem Pendukung Keputusan (SPK)</b> atau biasa di sebut dengan <b>Decision Support System (DSS)</b> adalah sebuah system yang di buat untuk memberikan solusi kepada suatu masalah. SPK bertujuan untuk memberikan informasi, membuat prediksi dan
                   juga membuat mengarahkan agar dapat memilih pilihan yang lebih baik. <br>
                   Dengan menggunakan SPK, solusi yang di dapat bisa di dapatkan lebih cepat dan lebih terpercaya, terutama dalam 
                   menyelesaikan suatu masalah yang sangat kompleks dan tidak terstruktur. <br><br>
@@ -191,17 +199,49 @@ if(!isset($_SESSION['email']))
                   5. Komponen utama dari SPK adalah data dan model analisis. <br><br>
 
                   Ada beberapa metode yang bisa di gunakan dalam SPK, pada sistem ini metode yang digunakan adalah metode 
-                  Simple Additive Weighting (SAW) yang merupakan salah satu metode SPK yang mudah di gunakan.
+                  <b>Simple Additive Weighting (SAW)</b> yang merupakan salah satu metode SPK yang mudah di gunakan.
                  </p>
                </div>
                 </div>
 
                 <div class="tab-pane" id="tab_2">
+                  <div class="box-header with-border">
+                    <h5><b>Tentang Metode Simple Additive Weighting.</b></h5>
+                  </div>
+                <div class="box-body">
+                <br><center>
+                <img src="assets/saw-ilus.jpg">
+                </center><br><br>
+                <p align="justify">
+                <b>Simple Additive Weighting (SAW)</b> adalah suatu metode yang memiliki konsep dasar yaitu mencari penambahan bobot dari performa setiap alternatif yang ada dalam suatu masalah. (Fishburn, 1967)(MacCrimmon, 1968).<br>
+                Metode ini membutuhkan proses yang di namakan proses normalisasi data. Di karenakan data yang di peroleh bisa berbentuk apa saja, oleh karena itu di butuhkan proses normalisasi.<br>
+                Dalam sistem ini, yang di sebut sebagai alternatif adalah lokasi-lokasi yang di pilih. Setiap alternatif ini memiliki kriteria, dan kriteria tersebut memiliki bobot yang di tentuka oleh pengguna. <br><br>
+                Dalam SAW, setiap kriteria memiliki 2 tipe kriteria :<br>
+                1. <b>Benefit</b> : Kriteria yang memiliki sifat benefit artinya semakin besar value nya semakin baik. Contohnya adalah dalam kasus ini, ketinggian lokasi menjadi salah satu kriteria penentu yang dimana semakin tinggi lokasi tersebut maka semakin baik. Oleh karena itu, maka ketinggian ini merupakan kriteria yang bersifat benefit. <br>
+                2. <b>Cost</b> : Kriteria yang bersifat cost ini berbalikan dengan benefit, dimana semakin kecil value dari kriteria maka semakin baik. Contohnya dalam kasus ini adalah kriteria suhu, semakin kecil/sejuk suhu di lokasi maka semakin baik untuk hewan ternak.
+                <br><br>
+                Berikut adalah langkah - langkah yang di perlukan dalam SAW : <br>
+                1. Menentukan kriteria apa saja yang perlukan di setiap alternatif. <br>
+                2. Menentukan bobot dari kriteria <br>
+                3. Normalisasi data kriteria. <br>
+                4. Mencari hasil akhir dengan mengkalikan setiap kriteria dari suatu alternatif dengan bobot kriteria masing - masing. <br>
 
+
+                </p>
+                </div>
                 </div>
 
                 <div class="tab-pane" id="tab_3">
-
+                  <div class="box-header with-border">
+                    <h5><b>Diagram Flow Sistem.</b></h5>
+                  </div>
+                <div class="box-body">
+                <p align="justify">
+                Gambar di bawah mengilustrasikan proses apa saja yang berlangsung dalam sistem ini secara umum :
+                </p>
+                <br><center>
+                <img src="assets/sistem-flow.png">
+                </center><br><br>
                 </div>
               </div>
             </form>

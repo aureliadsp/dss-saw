@@ -17,12 +17,12 @@
 <body class="hold-transition login-page">
         <?php
           //USE THIS WHEN BETA
-          $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-          mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+          //$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+          //mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
           // USE THIS WHEN LIVE
-          //$connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
-          //mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+          $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+          mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
           if(isset($_POST['email']) && !empty($_POST['email']) AND isset($_POST['password']) && !empty($_POST['password']))
           {
@@ -57,7 +57,7 @@
     
   <div class="login-logo">
     <img src="assets/icon/ugm_logo.png" width="50" height="50"><br>
-    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Penentuan Lokasi Pertenakan </i></p>
+    <p align="center"><i><b>Sistem Pendukung Keputusan</b> <br>Penentuan Lokasi Peternakan </i></p>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

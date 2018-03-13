@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
  
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -16,11 +19,6 @@
 </head>
 <body class="hold-transition login-page">
         <?php
-          //USE THIS WHEN BETA
-          //$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-          //mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
-
-          // USE THIS WHEN LIVE
           $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
           mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
@@ -35,14 +33,15 @@
             if($match > 0)
             {
               $msg = 'Login Complete! Thanks';
-              session_start();
               $_SESSION['email'] = $email;
               while( $row = mysqli_fetch_array($search) )
               {
                 $_SESSION['user_name'] = $row['full_name'];
               }
               $status = 1;
-              header('Location:index.php');
+              ?>
+              <script> location.replace("index.php"); </script>
+              <?php
             }
             else
             {

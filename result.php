@@ -250,8 +250,8 @@ if(!isset($_SESSION['email']))
                       <th> ID Lokasi </th>
                       <th> Nama Lokasi </th>
                       <th> Kabupaten </th>
-                      <th> Status Suhu </th>>
-                      <th> Keadaan Air </th>>
+                      <th> Status Suhu </th>
+                      <th> Keadaan Air </th>
                       <th> Keadaan Pakan </th>
                       <th> Keadaan Akses </th>
                       <th> Ketinggian </th>
@@ -269,7 +269,6 @@ if(!isset($_SESSION['email']))
                           {
                             if ($i != 3 && $i != 4)
                             {
-
                               echo '<td>' . $a . '</td>';
                             }
                             $i++;

@@ -116,8 +116,8 @@ if(!isset($_SESSION['email']))
       </nav>
     </header>
     <?php
-      include ($_SERVER["DOCUMENT_ROOT"] . '/dss-saw/function/scalingdata.php');
-      include ($_SERVER["DOCUMENT_ROOT"] . '/dss-saw/function/dsssawprocess.php');
+      include ($_SERVER["DOCUMENT_ROOT"] . '/function/scalingdata.php');
+      include ($_SERVER["DOCUMENT_ROOT"] . '/function/dsssawprocess.php');
 
       function generate_value($input)
       {

@@ -29,10 +29,6 @@ if(!isset($_SESSION['email']))
   <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpp6B9kDPrk0cZRRM4HsKz4Phj79KwNAU&callback=initmap"
-  type="text/javascript"></script>
-  <script type="text/javascript" src="assets/js/jquery.js"></script>
-  <script type="text/javascript" src="assets/js/markerclusterer_packed.js"></script>
 </head>
 <?php
     $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
@@ -306,6 +302,10 @@ if(!isset($_SESSION['email']))
 <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpp6B9kDPrk0cZRRM4HsKz4Phj79KwNAU&callback=initmap"
+  type="text/javascript"></script>
+<script type="text/javascript" src="assets/js/jquery.js"></script>
+<script type="text/javascript" src="assets/js/markerclusterer_packed.js"></script>
 <script type="text/javascript">
   function ClearResult()
   {

@@ -158,6 +158,7 @@
 
             </div>
             <div class="box-footer">
+              <a href="login.php" class="text-center">Kembali ke sign in.</a>
               <button type="submit" class="btn btn-info pull-right">Sign up</button>
             </div>
           </form>

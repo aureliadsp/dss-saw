@@ -118,7 +118,7 @@ if(!isset($_SESSION['email']))
                     <img src="assets/icon/Cover-1.png" alt="First slide">
                   </div>
                   <div class="item">
-                    <img src="assets/icon/Cover-2.jpg" style="max-height: 500px" alt="Second slide">
+                    <img src="assets/icon/Cover-4.jpg" alt="Second slide">
                     </div>
                   <div class="item">
                     <img src="assets/icon/Cover-3.jpg" style="max-height: 500px" alt="Third slide">
@@ -157,7 +157,7 @@ if(!isset($_SESSION['email']))
               </div>
               <div class="box-body">
               <p align="justify">
-              Materi apa saja yang perlu di pahami saat menggunakan sistem ini antara lain : <br>
+              Materi apa saja yang perlu di pahami saat menggunakan sistem ini antara lain : <br><br>
               - Sistem Pendukung Keputusan secara umum.<br>
               - Metode Simple Additive Weighting (SAW) secara umum. <br>
               - Flow dari sistem ini sendiri secara umum. <br><br>

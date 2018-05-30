@@ -5068,4 +5068,10 @@ table.text-center th {
       background: #EEE; /* hand */
     }
   }
+
+  .scrollcustom 
+  {
+    height: 800px;
+    overflow: auto;
+  }
 }

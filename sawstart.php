@@ -101,7 +101,7 @@ if(!isset($_SESSION['email']))
     </header>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="height: 1000px">
+  <div class="content-wrapper" style="height: 1100px">
     <div class="container">
     <section class="content-header">
       <h1><small>Input Data</small></h1>
@@ -114,7 +114,7 @@ if(!isset($_SESSION['email']))
     <!-- Main content -->
     <section class="content container-fluid">
       <div class="row">
-          <div class="box box-solid" style="height: 900px">
+          <div class="box box-solid" style="height: 1000px">
             <div class="box-header with-border">
               <h4><b><i class="fa fa-circle-o-notch"></i> Input Data </b></h4>
             </div>
@@ -127,7 +127,7 @@ if(!isset($_SESSION['email']))
               <li><a href="#tab_3" data-toggle="tab"> <i class="fa fa-location-arrow"></i> Pilih lokasi </a></li>
             </ul>
             <form name="inputdata" action="editlocation.php" method="get">
-              <div class="tab-content" style="height: 800px">
+              <div class="tab-content" style="height: 900px">
                 <div class="tab-pane active" id="tab_1">
                   <center>
                     <br>
@@ -255,6 +255,7 @@ if(!isset($_SESSION['email']))
                     table { table-layout: fixed; }
                     table th, table td { overflow: auto; }
                   </style>
+                  <div class="scrollcustom">
                   <table id="chooseloc" class="table table-bordered table-striped" style="width:1000px">
                     <thead>
                     <?php
@@ -278,6 +279,7 @@ if(!isset($_SESSION['email']))
                       ?>
                     </tbody>
                     </table>
+                    </div>
                     <a class="btn btn-primary btnPrevious" ><span class="fa fa-arrow-left"></span> Previous</a>
                     <button type="Submit" name="input_data" onclick="return checkForm(inputdata)" class="btn btn-primary"><span class="fa fa-edit"></span>  Edit lokasi </button>
 

@@ -68,8 +68,8 @@ if(!isset($_SESSION['email']))
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database"></i> Data <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="#"><i class="fa fa-paw"></i><span>Data Hewan</span></a></li>
-                    <li><a href="#"><i class="fa fa-list-ul"></i><span>Data Kriteria</span></a></li>
-                    <li><a href="#"><i class="fa fa-location-arrow"></i><span>Data Lokasi</span></a></li>
+                    <li><a href="criteriadata.php"><i class="fa fa-list-ul"></i><span>Data Kriteria</span></a></li>
+                    <li><a href="locationdata.php"><i class="fa fa-location-arrow"></i><span>Data Lokasi</span></a></li>
                   </ul>
                 </li>
               </ul>

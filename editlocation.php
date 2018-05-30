@@ -69,10 +69,6 @@ if(!isset($_SESSION['email']))
                       JOIN tb_mobilitydata m ON l.loc_id = m.mobility_id 
                       WHERE l.loc_id IN ('" . implode("','",$m_location) . "')" );
 
-      //echo '<pre>'; 
-      print_r($querylocedit); 
-      //echo '</pre>';
-
       $finalcb = array();
       $m_locnewID = array();
       while($rowloc= mysqli_fetch_row($querylocedit)) 
@@ -141,7 +137,7 @@ if(!isset($_SESSION['email']))
       </nav>
     </header>
 
-  <div class="content-wrapper" style="height: 1000px">
+  <div class="content-wrapper" style="height: 1200px">
     <div class="container">
     <section class="content-header">
       <h1><small></small></h1>
@@ -153,7 +149,7 @@ if(!isset($_SESSION['email']))
 
     <section class="content container-fluid">
       <div class="row">
-          <div class="box box-solid" style="height: 800px">
+          <div class="box box-solid" style="height: 1100px">
             <div class="box-header with-border">
               <h4><b><i class="fa fa-edit"></i> Edit data</b></h4>
             </div>
@@ -222,8 +218,6 @@ if(!isset($_SESSION['email']))
             </form>
             </div>
           </div>
-          <div class="box-footer">
-        </div>
         </div>
       </div>
     </div>
@@ -231,7 +225,6 @@ if(!isset($_SESSION['email']))
 </section>
 </div>
 </div>
-  <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
   <footer class="main-footer">

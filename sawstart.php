@@ -33,8 +33,13 @@ if(!isset($_SESSION['email']))
   </head>
 
   <?php
-    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    // USE WHEN LIVE
+    //$connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    //mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
+    // USE WHEN BETA
+    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
     $sqlanimal = mysqli_query($connect_db, "SELECT animal_id, animal_name FROM tb_animaldata");
     $sqlcriteria = mysqli_query($connect_db, "SELECT cri_id, criteria_name, type_name FROM tb_criteria");
@@ -109,7 +114,7 @@ if(!isset($_SESSION['email']))
     <!-- Main content -->
     <section class="content container-fluid">
       <div class="row">
-          <div class="box box-solid" style="height: 800px">
+          <div class="box box-solid" style="height: 900px">
             <div class="box-header with-border">
               <h4><b><i class="fa fa-circle-o-notch"></i> Input Data </b></h4>
             </div>

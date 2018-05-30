@@ -31,8 +31,14 @@ if(!isset($_SESSION['email']))
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <?php
-    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    // USE WHEN LIVE
+    //$connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    //mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
+    // USE WHEN BETA
+    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
 
     if(isset($_SESSION['FINALRESULT']))
     {

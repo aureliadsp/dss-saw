@@ -34,8 +34,14 @@ if(!isset($_SESSION['email']))
   </head>
 
   <?php
-    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    // USE WHEN LIVE
+    //$connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    //mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
+    // USE WHEN BETA
+    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
 
     if( isset( $_GET['selectanimal'] ) AND isset( $_GET['weight']) AND isset( $_GET['chk_loc']) )
     {
@@ -62,6 +68,10 @@ if(!isset($_SESSION['email']))
                       JOIN tb_fodderdata f ON l.loc_id = f.fodder_id 
                       JOIN tb_mobilitydata m ON l.loc_id = m.mobility_id 
                       WHERE l.loc_id IN ('" . implode("','",$m_location) . "')" );
+
+      //echo '<pre>'; 
+      print_r($querylocedit); 
+      //echo '</pre>';
 
       $finalcb = array();
       $m_locnewID = array();

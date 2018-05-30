@@ -17,12 +17,14 @@
 <body class="hold-transition register-page">
   <?php
     // ---------------------------------------------------------------------------------- START PHP 
-    //$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-    //mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    // USE WHEN LIVE
+    //$connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    //mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
-    // USE THIS WHEN LIVE
-    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    // USE WHEN BETA
+    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
 
             
     if(isset($_POST['fullname']) && !empty($_POST['fullname']) AND 

@@ -30,13 +30,14 @@ if(!isset($_SESSION['email']))
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
   <?php
-    // USE THIS WHEN BETA
-    //$connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
-    //mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    // USE WHEN LIVE
+    //$connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+    //mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
 
-    // USE THIS WHEN LIVE
-    $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
-    mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+    // USE WHEN BETA
+    $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+    mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
   ?>
   <body class="hold-transition skin-red layout-top-nav">
   <div class="wrapper">

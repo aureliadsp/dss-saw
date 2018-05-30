@@ -19,8 +19,14 @@ session_start();
 </head>
 <body class="hold-transition login-page">
         <?php
-          $connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
-          mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+          // USE WHEN LIVE
+          //$connect_db = mysqli_connect("localhost", "dsswg_admin", "dsssawugm"); // Connect to database server(localhost) with username and password.
+          //mysqli_select_db($connect_db, "dsswg_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
+          // USE WHEN BETA
+          $connect_db = mysqli_connect("localhost", "root", ""); // Connect to database server(localhost) with username and password.
+          mysqli_select_db($connect_db, "db_livestockmapping") or die(mysqli_error()); // Select registrations database.
+
 
           if(isset($_POST['email']) && !empty($_POST['email']) AND isset($_POST['password']) && !empty($_POST['password']))
           {
